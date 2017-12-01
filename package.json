@@ -1,0 +1,11 @@
+{
+  "name": "trivial",
+  "version": "0.0.1",
+  "scripts": {
+    "start": "node_modules/.bin/lerna run --parallel start",
+    "install": "node_modules/.bin/lerna bootstrap"
+  },
+  "devDependencies": {
+    "lerna": "^2.5.1"
+  }
+}

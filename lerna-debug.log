@@ -1,0 +1,249 @@
+0 silly input []
+1 silly flags { _: [ 'bootstrap' ],
+1 silly flags   'reject-cycles': false,
+1 silly flags   rejectCycles: false,
+1 silly flags   args: [] }
+2 verbose rootPath /Users/leblancc/Repositories/trivial
+3 info version 2.5.1
+4 silly existsSync /Users/leblancc/Repositories/trivial/VERSION
+5 silly initialize attempt
+6 silly npmConfig { registry: undefined,
+6 silly npmConfig   npmClient: undefined,
+6 silly npmConfig   npmClientArgs: undefined,
+6 silly npmConfig   mutex: undefined }
+7 silly initialize success
+8 silly execute attempt
+9 info Bootstrapping 2 packages
+10 info lifecycle preinstall
+11 silly runScript preinstall trivial-api
+12 silly trivial-api
+13 silly runScript preinstall trivial-tv
+14 silly trivial-tv
+15 silly hasDependencyInstalled trivial-api babel-plugin-transform-object-rest-spread
+16 silly dependencyIsSatisfied [ 'babel-plugin-transform-object-rest-spread',
+16 silly dependencyIsSatisfied   '^6.26.0',
+16 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+17 verbose dependencyIsSatisfied babel-plugin-transform-object-rest-spread true
+18 silly hasDependencyInstalled trivial-api babel-preset-es2015
+19 silly dependencyIsSatisfied [ 'babel-preset-es2015',
+19 silly dependencyIsSatisfied   '^6.24.1',
+19 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+20 verbose dependencyIsSatisfied babel-preset-es2015 true
+21 silly hasDependencyInstalled trivial-api babel-register
+22 silly dependencyIsSatisfied [ 'babel-register',
+22 silly dependencyIsSatisfied   '^6.26.0',
+22 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+23 verbose dependencyIsSatisfied babel-register true
+24 silly hasDependencyInstalled trivial-api bunyan
+25 silly dependencyIsSatisfied [ 'bunyan',
+25 silly dependencyIsSatisfied   '^1.8.12',
+25 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+26 verbose dependencyIsSatisfied bunyan true
+27 silly hasDependencyInstalled trivial-api dotenv
+28 silly dependencyIsSatisfied [ 'dotenv',
+28 silly dependencyIsSatisfied   '^4.0.0',
+28 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+29 verbose dependencyIsSatisfied dotenv true
+30 silly hasDependencyInstalled trivial-api express
+31 silly dependencyIsSatisfied [ 'express',
+31 silly dependencyIsSatisfied   '^4.16.2',
+31 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+32 verbose dependencyIsSatisfied express true
+33 silly hasDependencyInstalled trivial-api express-ws
+34 silly dependencyIsSatisfied [ 'express-ws',
+34 silly dependencyIsSatisfied   '^3.0.0',
+34 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+35 verbose dependencyIsSatisfied express-ws true
+36 silly hasDependencyInstalled trivial-api uuid
+37 silly dependencyIsSatisfied [ 'uuid',
+37 silly dependencyIsSatisfied   '^3.1.0',
+37 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/api/node_modules' ]
+38 verbose dependencyIsSatisfied uuid true
+39 silly hasDependencyInstalled trivial-tv babel-jest
+40 silly dependencyIsSatisfied [ 'babel-jest',
+40 silly dependencyIsSatisfied   '21.2.0',
+40 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+41 verbose dependencyIsSatisfied babel-jest true
+42 silly hasDependencyInstalled trivial-tv babel-preset-react-native
+43 silly dependencyIsSatisfied [ 'babel-preset-react-native',
+43 silly dependencyIsSatisfied   '4.0.0',
+43 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+44 verbose dependencyIsSatisfied babel-preset-react-native true
+45 silly hasDependencyInstalled trivial-tv jest
+46 silly dependencyIsSatisfied [ 'jest',
+46 silly dependencyIsSatisfied   '21.2.1',
+46 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+47 verbose dependencyIsSatisfied jest true
+48 silly hasDependencyInstalled trivial-tv react-native-port-patcher
+49 silly dependencyIsSatisfied [ 'react-native-port-patcher',
+49 silly dependencyIsSatisfied   '^1.0.2',
+49 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+50 verbose dependencyIsSatisfied react-native-port-patcher true
+51 silly hasDependencyInstalled trivial-tv react-test-renderer
+52 silly dependencyIsSatisfied [ 'react-test-renderer',
+52 silly dependencyIsSatisfied   '16.0.0',
+52 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+53 verbose dependencyIsSatisfied react-test-renderer true
+54 silly hasDependencyInstalled trivial-tv react
+55 silly dependencyIsSatisfied [ 'react',
+55 silly dependencyIsSatisfied   '16.0.0',
+55 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+56 verbose dependencyIsSatisfied react true
+57 silly hasDependencyInstalled trivial-tv react-native
+58 silly dependencyIsSatisfied [ 'react-native',
+58 silly dependencyIsSatisfied   '^0.49.0',
+58 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+59 verbose dependencyIsSatisfied react-native true
+60 silly hasDependencyInstalled trivial-tv react-native-linear-gradient
+61 silly dependencyIsSatisfied [ 'react-native-linear-gradient',
+61 silly dependencyIsSatisfied   '^2.3.0',
+61 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+62 verbose dependencyIsSatisfied react-native-linear-gradient true
+63 silly hasDependencyInstalled trivial-tv react-native-video
+64 silly dependencyIsSatisfied [ 'react-native-video',
+64 silly dependencyIsSatisfied   '^2.0.0',
+64 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+65 verbose dependencyIsSatisfied react-native-video true
+66 silly hasDependencyInstalled trivial-tv react-navigation
+67 silly dependencyIsSatisfied [ 'react-navigation',
+67 silly dependencyIsSatisfied   '^1.0.0-beta.19',
+67 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+68 verbose dependencyIsSatisfied react-navigation true
+69 silly hasDependencyInstalled trivial-tv react-redux
+70 silly dependencyIsSatisfied [ 'react-redux',
+70 silly dependencyIsSatisfied   '^5.0.6',
+70 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+71 verbose dependencyIsSatisfied react-redux true
+72 silly hasDependencyInstalled trivial-tv redux
+73 silly dependencyIsSatisfied [ 'redux',
+73 silly dependencyIsSatisfied   '^3.7.2',
+73 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+74 verbose dependencyIsSatisfied redux true
+75 silly hasDependencyInstalled trivial-tv redux-persist
+76 silly dependencyIsSatisfied [ 'redux-persist',
+76 silly dependencyIsSatisfied   '^4.10.0',
+76 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+77 verbose dependencyIsSatisfied redux-persist true
+78 silly hasDependencyInstalled trivial-tv redux-thunk
+79 silly dependencyIsSatisfied [ 'redux-thunk',
+79 silly dependencyIsSatisfied   '^2.2.0',
+79 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+80 verbose dependencyIsSatisfied redux-thunk true
+81 silly hasDependencyInstalled trivial-tv remote-redux-devtools
+82 silly dependencyIsSatisfied [ 'remote-redux-devtools',
+82 silly dependencyIsSatisfied   '^0.5.12',
+82 silly dependencyIsSatisfied   '/Users/leblancc/Repositories/trivial/tv/node_modules' ]
+83 verbose dependencyIsSatisfied remote-redux-devtools true
+84 silly root dependencies []
+85 silly leaf dependencies {
+85 silly leaf dependencies   "trivial-api": [
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "babel-plugin-transform-object-rest-spread@^6.26.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "babel-preset-es2015@^6.24.1",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "babel-register@^6.26.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "bunyan@^1.8.12",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "dotenv@^4.0.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "express@^4.16.2",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "express-ws@^3.0.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "uuid@^3.1.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     }
+85 silly leaf dependencies   ],
+85 silly leaf dependencies   "trivial-tv": [
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "babel-jest@21.2.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "babel-preset-react-native@4.0.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "jest@21.2.1",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-native-port-patcher@^1.0.2",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-test-renderer@16.0.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react@16.0.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-native@^0.49.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-native-linear-gradient@^2.3.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-native-video@^2.0.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-navigation@^1.0.0-beta.19",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "react-redux@^5.0.6",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "redux@^3.7.2",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "redux-persist@^4.10.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "redux-thunk@^2.2.0",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     },
+85 silly leaf dependencies     {
+85 silly leaf dependencies       "dependency": "remote-redux-devtools@^0.5.12",
+85 silly leaf dependencies       "isSatisfied": true
+85 silly leaf dependencies     }
+85 silly leaf dependencies   ]
+85 silly leaf dependencies }
+86 info Symlinking packages and binaries
+87 silly packageActions finished trivial-api
+88 silly packageActions finished trivial-tv
+89 info lifecycle postinstall
+90 silly runScript postinstall trivial-api
+91 silly trivial-api
+92 silly runScript postinstall trivial-tv
+93 silly runScriptInDir postinstall [] tv
+94 silly getExecOpts { cwd: '/Users/leblancc/Repositories/trivial/tv' }
+95 silly trivial-tv
+96 error execute Error occured with 'trivial-tv' while running 'npm run postinstall'
+97 error npm run postinstall [trivial-tv] Output from stdout:
+98 error npm run postinstall [trivial-tv] Output from stderr:
+99 error execute Error occured with 'trivial-tv' while running 'npm run postinstall'
