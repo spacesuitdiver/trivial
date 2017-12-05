@@ -1,3 +1,4 @@
+import os from 'os';
 import express from 'express';
 import expressWs from 'express-ws';
 
@@ -25,4 +26,6 @@ app.ws('/', (ws, req) => {
   });
 });
 
-app.listen(process.env.PORT || 18080);
+const port = process.env.PORT || 8080;
+app.listen(port);
+logger.info(`Listening on http://${os.hostname()}:${port}.`);
