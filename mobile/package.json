@@ -1,0 +1,16 @@
+{
+  "name": "trivial-mobile",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/.bin/exp start"
+  },
+  "dependencies": {
+    "expo": "^23.0.0",
+    "react": "16.0.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz"
+  },
+  "devDependencies": {
+    "exp": "^46.0.6"
+  }
+}
