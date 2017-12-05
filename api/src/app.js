@@ -16,6 +16,11 @@ app.use(middlewares);
 
 app.use('/static', express.static('public'));
 
+app.use('/nextQuestion', (req, res) => {
+	handlers['round']['nextQuestion']();
+	res.send('OK');
+});
+
 app.ws('/', (ws, req) => {
   ws.on('close', () => logger.info('Connection closed.'));
   ws.on('message', m => {
