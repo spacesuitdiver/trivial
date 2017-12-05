@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js | ./node_modules/.bin/bunyan"
+    "start": "./node_modules/.bin/nodemon index.js | ./node_modules/.bin/bunyan"
   },
   "dependencies": {
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -14,5 +14,8 @@
     "express": "^4.16.2",
     "express-ws": "^3.0.0",
     "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.12.1"
   }
 }
