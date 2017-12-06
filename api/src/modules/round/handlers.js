@@ -20,7 +20,7 @@ export const play = (event) => {
   moderators.forEach((c) => {
     c.ws.send(JSON.stringify({
       resource: 'round',
-      action: 'play',
+      action: 'PLAY',
       user,
     }));
   });
@@ -43,7 +43,7 @@ export const nextQuestion = () => {
 
     client.ws.send(JSON.stringify({
       resource: 'round',
-      action: 'nextQuestion',
+      action: 'NEXT_QUESTION',
       payload,
     }));
   });
@@ -56,7 +56,7 @@ export const answer = (event) => {
   moderators.forEach((client) => {
     client.ws.send(JSON.stringify({
       resource: 'round',
-      action: 'answer',
+      action: 'ANSWER',
       payload,
     }));
   });
