@@ -1,5 +1,3 @@
-import logger from '../../logger';
-
 const players = [];
 const moderators = [];
 const questions = [
@@ -9,6 +7,7 @@ const questions = [
     answerIndex: 0,
   },
 ];
+let currentQuestionIndex = 0;
 
 export const play = (event) => {
   const { ws, user } = event;
@@ -35,9 +34,11 @@ export const moderate = (event) => {
 };
 
 export const nextQuestion = () => {
+  currentQuestionIndex += currentQuestionIndex;
+
   players.forEach((client) => {
     const payload = {
-      question: questions[0],
+      question: questions[currentQuestionIndex],
     };
 
     client.ws.send(JSON.stringify({
@@ -60,4 +61,3 @@ export const answer = (event) => {
     }));
   });
 };
-

@@ -16,19 +16,19 @@ app.use(middlewares);
 
 app.use('/static', express.static('public'));
 
-app.use('/nextQuestion', (req, res) => {
-	handlers['round']['nextQuestion']();
-	res.send('OK');
-});
-
 app.ws('/', (ws, req) => {
   ws.on('close', () => logger.info('Connection closed.'));
-  ws.on('message', m => {
+  ws.on('message', (m) => {
     logger.info(m);
     const message = JSON.parse(m);
 
-    handlers[message.resource][message.action]({...message, ws });
+    handlers[message.resource][message.action]({ ...message, ws });
   });
+});
+
+app.use('/nextQuestion', (req, res) => {
+  handlers.round.nextQuestion();
+  res.send('OK');
 });
 
 const port = process.env.PORT || 8080;
