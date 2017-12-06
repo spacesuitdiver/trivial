@@ -1,15 +1,15 @@
-import * as types from './types';
+import { Constants } from 'expo';
 import { send } from '../../websocket';
 
-const joinStarted = () => ({ type: types.JOIN_STARTED });
+export const play = name => () => {
+  const { deviceId } = Constants;
 
-export const join = name => (dispatch) => {
-  dispatch(joinStarted());
   send({
-  	resource: 'round',
-  	action: 'join',
-  	user: {
-  		name,
-  	},
+    resource: 'round',
+    action: 'play',
+    user: {
+      name,
+      deviceId,
+    },
   });
 };

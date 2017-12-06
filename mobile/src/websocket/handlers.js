@@ -3,6 +3,7 @@ import { store } from '../redux';
 export const onMessage = (m) => {
   if (!m.data) return;
   const message = JSON.parse(m.data);
+  console.log(message);
 
   if (!message.resource || !message.action) return;
 

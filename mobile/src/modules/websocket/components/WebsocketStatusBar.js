@@ -40,7 +40,7 @@ class WebSocketStatusBar extends Component {
 
     return (
       <Animated.View style={{ backgroundColor: status === 'connected' ? 'green' : 'red', height: this.animations.barHeight }}>
-        <Text style={{ fontSize: 12, textAlign: 'center', paddingVertical: 2 }}>{this.renderStatusMessage()}</Text>
+        <Text style={{ fontSize: 12, textAlign: 'center', paddingVertical: 2, color: 'white' }}>{this.renderStatusMessage()}</Text>
       </Animated.View>
     );
   }

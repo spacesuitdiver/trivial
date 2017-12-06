@@ -22,7 +22,7 @@ class JoinScreen extends React.Component {
           value={this.state.name}
           style={[human.body,
             {
-              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              backgroundColor: 'rgba(255,255,255,0.1)',
               color: iOSColors.lightGray,
               borderRadius: 8,
               padding: 12,
@@ -34,9 +34,16 @@ class JoinScreen extends React.Component {
         />
         <TouchableOpacity
           style={{ marginBottom: deviceWidth * 0.6 }}
-          onPress={() => this.props.actions.round.join(this.state.name)}
+          onPress={() => this.props.actions.round.play(this.state.name)}
         >
-          <View style={{ borderRadius: 8, backgroundColor: iOSColors.orange, marginTop: 8, padding: 12 }}>
+          <View
+            style={{
+              borderRadius: 8,
+              backgroundColor: iOSColors.orange,
+              marginTop: 8,
+              padding: 12,
+            }}
+          >
             <Text style={[human.bodyWhite, { textAlign: 'center' }]}>Join!</Text>
           </View>
         </TouchableOpacity>
