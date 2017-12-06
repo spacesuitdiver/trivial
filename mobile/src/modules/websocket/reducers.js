@@ -1,4 +1,4 @@
-import * as types from './types'; 
+import * as types from './types';
 
 const initialState = {
   status: 'disconnected',
@@ -9,19 +9,19 @@ export const connection = (state = initialState, action: any) => {
     case types.CONNECTING:
       return {
         ...state,
-        status: 'connecting'
+        status: 'connecting',
       };
     case types.DISCONNECTED:
       return {
         ...state,
-        status: 'disconnected'
+        status: 'disconnected',
       };
     case types.CONNECTED:
       return {
         ...state,
-        status: 'connected'
-      }
+        status: 'connected',
+      };
     default:
       return state;
-  } 
+  }
 };

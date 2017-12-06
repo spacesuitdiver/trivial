@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 class WebSocketStatusBar extends Component {
 
   animations = {
-    barHeight: new Animated.Value(20)
-  }
+    barHeight: new Animated.Value(20),
+  };
 
   componentDidUpdate() {
     const { status } = this.props;
@@ -26,9 +26,9 @@ class WebSocketStatusBar extends Component {
 
     switch (status) {
       case 'connected':
-        return 'Connected to server'
+        return 'Connected to server';
       case 'connecting':
-        return 'Attempting to connect to server'
+        return 'Attempting to connect to server';
       case 'disconnected':
       default:
         return 'Disconnected from server';
@@ -42,10 +42,10 @@ class WebSocketStatusBar extends Component {
       </Animated.View>
     );
   }
-};
+}
 
-const mapStateToProps = (state) => ({
-  status: state.websocket.status
+const mapStateToProps = state => ({
+  status: state.websocket.status,
 });
 
-export default connect(mapStateToProps)(WebSocketStatusBar)
+export default connect(mapStateToProps)(WebSocketStatusBar);

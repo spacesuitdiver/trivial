@@ -18,14 +18,14 @@ const { width: deviceWidth } = Dimensions.get('window');
 
 const HEADER_IMAGE_HEIGHT = (deviceWidth - 40 - 8) * 0.5625; // 16:9 aspect
 
-const handleIconPress = item => {
+const handleIconPress = (item) => {
   ActionSheetIOS.showActionSheetWithOptions(
     {
       options: ['Share', 'Preview', 'Cancel'],
       cancelButtonIndex: 2,
       title: item.title,
     },
-    selectedOption => {
+    (selectedOption) => {
       console.log(selectedOption);
     },
   );
@@ -95,15 +95,15 @@ class Channel extends React.Component {
             >
               <Video
                 ref={(ref) => {
-                 this.player = ref
+                  this.player = ref;
                 }}
                 style={{
                   ...StyleSheet.absoluteFillObject,
                 }}
                 source={{ uri: channel.playlist[channel.nowPlayingIndex].mp4 }}
-                muted={true}
+                muted
                 onEnd={() => this.props.actions.channel.fetch()}
-                repeat={true}
+                repeat
               />
             </View>
           </View>

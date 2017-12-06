@@ -1,5 +1,5 @@
 import reducers from './reducers';
 
-export { 
+export {
   reducers,
 };
