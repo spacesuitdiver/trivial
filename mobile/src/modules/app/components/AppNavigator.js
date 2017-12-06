@@ -1,11 +1,6 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { StackNavigator } from 'react-navigation';
 
-import TabBarBottom from './TabBarBottom';
-import { QuestionScreen } from '../../question';
-import { JoinScreen } from '../../round';
-
+import { JoinScreen, QuestionScreen } from '../../round';
 
 const AppNavigator = StackNavigator(
   {
@@ -14,7 +9,6 @@ const AppNavigator = StackNavigator(
   },
   {
     headerMode: 'none',
-    mode: 'modal',
   },
 );
 

@@ -1,9 +1,16 @@
+import logger from '../../logger';
+
 const players = [];
 const moderators = [];
 const questions = [
   {
     text: 'Can haz cheeseburger?',
     answers: ['Yes!', 'No!'],
+    answerIndex: 0,
+  },
+  {
+    text: 'What is the meaning of life?',
+    answers: ['27', '92', 'Fourty Two', 'I wish I knew...'],
     answerIndex: 0,
   },
 ];
@@ -34,13 +41,12 @@ export const moderate = (event) => {
 };
 
 export const nextQuestion = () => {
-  currentQuestionIndex += currentQuestionIndex;
-
   const payload = {
     question: questions[currentQuestionIndex],
   };
 
   players.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
     client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'NEXT_QUESTION',
@@ -48,12 +54,15 @@ export const nextQuestion = () => {
     }));
   });
   moderators.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
     client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'NEXT_QUESTION',
       payload,
     }));
   });
+
+  currentQuestionIndex += 1;
 };
 
 export const answer = (event) => {
