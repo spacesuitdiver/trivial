@@ -13,6 +13,8 @@ export default (reducers) => {
     ),
   );
 
+  AsyncStorage.clear();
+
   // persistStore(store, {
   //   storage: AsyncStorage,
   // });

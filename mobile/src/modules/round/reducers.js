@@ -2,19 +2,14 @@ import * as types from './types';
 
 const initialState = {
   question: null,
-  answers: null,
-  fetching: false,
-  refreshing: false,
 };
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case types.FETCH_SUCCESS: {
+    case types.NEXT_QUESTION: {
       return {
         ...state,
         question: payload.question,
-        answers: payload.answers,
-        refreshing: false,
       };
     }
     default: {

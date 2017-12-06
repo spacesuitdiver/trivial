@@ -13,6 +13,13 @@ class JoinScreen extends React.Component {
     name: '',
   };
 
+  join = () => {
+    const { actions, navigation } = this.props;
+
+    actions.round.play(this.state.name);
+    navigation.navigate('Question');
+  };
+
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 12 }}>
@@ -34,7 +41,7 @@ class JoinScreen extends React.Component {
         />
         <TouchableOpacity
           style={{ marginBottom: deviceWidth * 0.6 }}
-          onPress={() => this.props.actions.round.play(this.state.name)}
+          onPress={this.join}
         >
           <View
             style={{
