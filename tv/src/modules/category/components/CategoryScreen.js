@@ -1,10 +1,10 @@
 import React from 'react';
-import { 
-  View, 
-  ScrollView, 
-  TouchableHighlight, 
-  Text, 
-  Image, 
+import {
+  View,
+  ScrollView,
+  TouchableHighlight,
+  Text,
+  Image,
   Dimensions,
   TVEventHandler,
 } from 'react-native';
@@ -18,17 +18,18 @@ class CategoryScreen extends React.Component {
 
   state = {
     paused: false,
-  }
+  };
 
   componentDidMount() {
-      const tvEventHandler = new TVEventHandler();
-      tvEventHandler.enable(this, (app, event) => {
-        this.onRemoteEvent(event);
-      });
+    alert('category');
+    const tvEventHandler = new TVEventHandler();
+    tvEventHandler.enable(this, (app, event) => {
+      this.onRemoteEvent(event);
+    });
   }
 
   onRemoteEvent({ eventType }) {
-    switch(eventType) {
+    switch (eventType) {
       case 'playPause': {
         this.togglePlayback();
       }
@@ -44,15 +45,16 @@ class CategoryScreen extends React.Component {
     const { paused } = this.state;
 
     return (
-      <View style={{ 
-          flex: 1, 
-          display: 'flex', 
-          alignItems: 'flex-end', 
+      <View
+        style={{
+          flex: 1,
+          display: 'flex',
+          alignItems: 'flex-end',
           backgroundColor: 'black',
         }}
       >
         <Video
-          style={{  
+          style={{
             position: 'absolute',
             top: 0,
             left: 0,
@@ -60,19 +62,21 @@ class CategoryScreen extends React.Component {
             right: 0,
           }}
           paused={paused}
-          source={{uri: 'http://localhost:5080/WebRTCApp/streams/stream1.m3u8'}}
+          source={{ uri: 'http://localhost:5080/WebRTCApp/streams/stream1.m3u8' }}
         />
         {paused &&
-          <View style={{
-            height: 200,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            position: 'absolute',
-            bottom: 0,
-            width: deviceWidth,
-          }}>
-            <TouchableHighlight 
+          <View
+            style={{
+              height: 200,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 0,
+              width: deviceWidth,
+            }}
+          >
+            <TouchableHighlight
               style={{
                 backgroundColor: 'rgba(255,255,255,0.2)',
                 borderRadius: 100,
@@ -86,10 +90,10 @@ class CategoryScreen extends React.Component {
                 enabled: false,
               }}
             >
-                <Image
-                  source={icon}
-                  style={{ tintColor: 'white' }}
-                />
+              <Image
+                source={icon}
+                style={{ tintColor: 'white' }}
+              />
             </TouchableHighlight>
           </View>
         }

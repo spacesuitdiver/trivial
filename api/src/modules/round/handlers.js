@@ -41,13 +41,20 @@ export const moderate = (event) => {
 };
 
 export const nextQuestion = () => {
+  const payload = {
+    question: questions[currentQuestionIndex],
+  };
+
   players.forEach((client) => {
     if (client.ws.readyState !== 1) return; // guard against nonready clients
-
-    const payload = {
-      question: questions[currentQuestionIndex],
-    };
-
+    client.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'NEXT_QUESTION',
+      payload,
+    }));
+  });
+  moderators.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
     client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'NEXT_QUESTION',
@@ -55,8 +62,7 @@ export const nextQuestion = () => {
     }));
   });
 
-  currentQuestionIndex = currentQuestionIndex + 1;
-
+  currentQuestionIndex += 1;
 };
 
 export const answer = (event) => {

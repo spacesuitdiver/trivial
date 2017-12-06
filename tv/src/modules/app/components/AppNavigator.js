@@ -1,15 +1,15 @@
-import React from 'react';
-import { View, Text, Easing, Animated } from 'react-native';
-import { StackNavigator, TabNavigator } from 'react-navigation';
+import { Animated } from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-import { CategoriesScreen, CategoryScreen } from '../../category';
+// import { CategoriesScreen, CategoryScreen } from '../../category';
+import { Question, Welcome } from '../../round';
 
 const fade = () => ({
   transitionSpec: {
     duration: 800,
     timing: Animated.timing,
   },
-  screenInterpolator: sceneProps => {
+  screenInterpolator: (sceneProps) => {
     const { position, scene } = sceneProps;
     const { index } = scene;
 
@@ -24,9 +24,9 @@ const fade = () => ({
 
 const AppNavigator = StackNavigator(
   {
-    Home: { screen: CategoriesScreen },
-    Category: { screen: CategoryScreen },
-  }, 
+    Welcome: { screen: Welcome },
+    Question: { screen: Question },
+  },
   {
     headerMode: 'none',
     mode: 'modal',

@@ -6,6 +6,8 @@
     "install": "node_modules/.bin/lerna bootstrap"
   },
   "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "eslint-plugin-react": "^7.5.1",
     "lerna": "^2.5.1"
   }
 }
