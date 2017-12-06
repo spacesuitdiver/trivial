@@ -5,26 +5,27 @@ export const onMessage = (m) => {
   const message = JSON.parse(m.data);
 
   if (!message.resource || !message.action) return;
-  // store.dispatch({
-  //   type: message.action,
-  //   gyms: message.data
-  // });
+
+  store.dispatch({
+    type: `${message.resource}/${message.action}`,
+    payload: message.payload || null,
+  });
 };
 
-export const onClose = (m) => {
+export const onClose = () => {
   store.dispatch({
-    type: 'websocket/CLOSED'
+    type: 'websocket/DISCONNECTED',
   });
-}
+};
 
-export const onError = (m) => {
+export const onError = () => {
   store.dispatch({
-    type: 'websocket/ERROR'
+    type: 'websocket/ERROR',
   });
-}
+};
 
-export const onOpen = (m) => {
+export const onOpen = () => {
   store.dispatch({
-    type: 'websocket/OPEN'
+    type: 'websocket/CONNECTED',
   });
-}
+};

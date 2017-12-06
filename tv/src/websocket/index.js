@@ -1,6 +1,6 @@
 import { onMessage, onClose, onError, onOpen } from './handlers';
 
-const connection = new WebSocket('ws://localhost:18080');
+const connection = new WebSocket('ws://localhost:8080');
 
 export const init = (store) => {
   connection.onmessage = onMessage;

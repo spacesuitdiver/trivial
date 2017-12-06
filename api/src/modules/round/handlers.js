@@ -36,11 +36,18 @@ export const moderate = (event) => {
 export const nextQuestion = () => {
   currentQuestionIndex += currentQuestionIndex;
 
-  players.forEach((client) => {
-    const payload = {
-      question: questions[currentQuestionIndex],
-    };
+  const payload = {
+    question: questions[currentQuestionIndex],
+  };
 
+  players.forEach((client) => {
+    client.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'NEXT_QUESTION',
+      payload,
+    }));
+  });
+  moderators.forEach((client) => {
     client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'NEXT_QUESTION',
