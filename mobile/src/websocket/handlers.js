@@ -14,7 +14,7 @@ export const onMessage = (m) => {
 
 export const onClose = (m) => {
   store.dispatch({
-    type: 'websocket/CLOSED',
+    type: 'websocket/DISCONNECTED',
   });
 };
 
@@ -26,6 +26,6 @@ export const onError = (m) => {
 
 export const onOpen = (m) => {
   store.dispatch({
-    type: 'websocket/OPEN',
+    type: 'websocket/CONNECTED',
   });
 };

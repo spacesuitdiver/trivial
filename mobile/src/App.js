@@ -3,16 +3,12 @@ import {
   StatusBar,
   View,
   StyleSheet,
-  FlatList,
-  Text,
-  Image,
-  TouchableOpacity,
 } from 'react-native';
+import { ScreenOrientation } from 'expo';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import * as WebSocket from './websocket';
-import { ScreenOrientation } from 'expo';
-
+import { WebsocketStatusBar } from './modules/websocket';
 import { AppNavigator } from './modules/app';
 
 class App extends Component {
@@ -26,7 +22,10 @@ class App extends Component {
     return (
       <View style={styles.container}>
         <Provider store={store}>
-          <AppNavigator />
+          <View style={{ flex: 1 }}>
+            <WebsocketStatusBar />
+            <AppNavigator />
+          </View>
         </Provider>
       </View>
     );

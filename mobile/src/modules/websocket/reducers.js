@@ -4,7 +4,7 @@ const initialState = {
   status: 'disconnected',
 };
 
-export const connection = (state = initialState, action: any) => {
+export default (state = initialState, action: any) => {
   switch (action.type) {
     case types.CONNECTING:
       return {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Animated, Text, StatusBar } from 'react-native';
+import { Animated, Text } from 'react-native';
 import { connect } from 'react-redux';
 
 class WebSocketStatusBar extends Component {
@@ -11,14 +11,14 @@ class WebSocketStatusBar extends Component {
   componentDidUpdate() {
     const { status } = this.props;
 
-    switch (status) {
-      case 'connected':
-        return Animated.spring(this.animations.barHeight, { toValue: 0 }).start();
-      case 'connecting':
-        return Animated.spring(this.animations.barHeight, { toValue: 20 }).start();
-      case 'disconnected':
-        return Animated.spring(this.animations.barHeight, { toValue: 20 }).start();
-    }
+    // switch (status) {
+    //   case 'connected':
+    //     return Animated.spring(this.animations.barHeight, { toValue: 0 }).start();
+    //   case 'connecting':
+    //     return Animated.spring(this.animations.barHeight, { toValue: 20 }).start();
+    //   case 'disconnected':
+    //     return Animated.spring(this.animations.barHeight, { toValue: 20 }).start();
+    // }
   }
 
   renderStatusMessage() {
@@ -36,8 +36,10 @@ class WebSocketStatusBar extends Component {
   }
 
   render() {
+    const { status } = this.props;
+
     return (
-      <Animated.View style={{ backgroundColor: 'red', height: this.animations.barHeight }}>
+      <Animated.View style={{ backgroundColor: status === 'connected' ? 'green' : 'red', height: this.animations.barHeight }}>
         <Text style={{ fontSize: 12, textAlign: 'center', paddingVertical: 2 }}>{this.renderStatusMessage()}</Text>
       </Animated.View>
     );
@@ -45,7 +47,7 @@ class WebSocketStatusBar extends Component {
 }
 
 const mapStateToProps = state => ({
-  status: state.websocket.status,
+  status: state.websocket.default.status,
 });
 
 export default connect(mapStateToProps)(WebSocketStatusBar);
