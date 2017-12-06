@@ -1,29 +1,63 @@
 import logger from '../../logger';
 
-var clients = [];
+const players = [];
+const moderators = [];
+const questions = [
+  {
+    text: 'Can haz cheeseburger?',
+    answers: ['Yes!', 'No!'],
+    answerIndex: 0,
+  },
+];
 
-export const join = event => {
-	const { ws, user } = event;
-	const payload = { ws, user };
+export const play = (event) => {
+  const { ws, user } = event;
+  const client = { ws, user };
 
-	clients = clients.concat(payload);
+  // add user to round
+  players.push(client);
 
-	logger.info(payload);
-	logger.info(clients);
+  // notify moderators of new user
+  moderators.forEach((c) => {
+    c.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'play',
+      user,
+    }));
+  });
 };
 
-export const nextQuestion = event => {
-	const question = 'Do you like cheesecake?';
+export const moderate = (event) => {
+  const { ws, user } = event;
+  const client = { ws, user };
 
-	clients.forEach(client => {
-		client.ws.send(JSON.stringify({
-			question
-		}));
-	});
-}
+  moderators.push(client);
+};
 
-export const leave = event => {
-	event.ws.send(JSON.stringify({
-		bye: 'Felicia',
-	}));	
-}
+export const nextQuestion = () => {
+  players.forEach((client) => {
+    const payload = {
+      question: questions[0],
+    };
+
+    client.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'nextQuestion',
+      payload,
+    }));
+  });
+};
+
+export const answer = (event) => {
+  const { user, answerIndex } = event;
+  const payload = { user, answerIndex };
+
+  moderators.forEach((client) => {
+    client.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'answer',
+      payload,
+    }));
+  });
+};
+

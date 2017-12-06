@@ -5,7 +5,7 @@ const logger = bunyan.createLogger({
   serializers: bunyan.stdSerializers,
   streams: [
     { stream: process.stdout },
-  ]
+  ],
 });
 
 export default logger;
