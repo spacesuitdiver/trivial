@@ -4,27 +4,27 @@ export const onMessage = (m) => {
   if (!m.data) return;
   const message = JSON.parse(m.data);
 
-  // if (!message.resource || !message.action) return;
+  if (!message.resource || !message.action) return;
+
   store.dispatch({
-    type: 'round/NEXT_QUESTION',
-    question: message.question,
+    type: `${message.resource}/${message.action}`,
+    payload: message.payload || null,
   });
-  alert(message.question);
 };
 
-export const onClose = (m) => {
+export const onClose = () => {
   store.dispatch({
     type: 'websocket/DISCONNECTED',
   });
 };
 
-export const onError = (m) => {
+export const onError = () => {
   store.dispatch({
     type: 'websocket/ERROR',
   });
 };
 
-export const onOpen = (m) => {
+export const onOpen = () => {
   store.dispatch({
     type: 'websocket/CONNECTED',
   });
