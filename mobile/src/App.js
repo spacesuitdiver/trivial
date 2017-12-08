@@ -8,7 +8,7 @@ import { ScreenOrientation } from 'expo';
 import { Provider } from 'react-redux';
 import { store } from './redux';
 import * as WebSocket from './websocket';
-import { WebsocketStatusBar } from './modules/websocket';
+import { WebSocketStatusBar } from './modules/websocket';
 import { AppNavigator } from './modules/app';
 
 class App extends Component {
@@ -23,7 +23,7 @@ class App extends Component {
       <View style={styles.container}>
         <Provider store={store}>
           <View style={{ flex: 1 }}>
-            <WebsocketStatusBar />
+            <WebSocketStatusBar />
             <AppNavigator />
           </View>
         </Provider>

@@ -1,5 +1,5 @@
 import * as types from './types';
-import WebsocketStatusBar from './components/WebsocketStatusBar';
+import WebSocketStatusBar from './components/WebSocketStatusBar';
 import reducer from './reducer';
 
-export { types, WebsocketStatusBar, reducer };
+export { types, WebSocketStatusBar, reducer };
