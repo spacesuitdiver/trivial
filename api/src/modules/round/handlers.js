@@ -1,20 +1,8 @@
+import * as TriviaApi from '../../apis/opentdb';
 import logger from '../../logger';
 
 const players = [];
 const moderators = [];
-const questions = [
-  {
-    text: 'Can haz cheeseburger?',
-    answers: ['Yes!', 'No!'],
-    answerIndex: 0,
-  },
-  {
-    text: 'What is the meaning of life?',
-    answers: ['27', '92', 'Fourty Two', 'I wish I knew...'],
-    answerIndex: 0,
-  },
-];
-let currentQuestionIndex = 0;
 
 export const play = (event) => {
   const { ws, user } = event;
@@ -41,28 +29,30 @@ export const moderate = (event) => {
 };
 
 export const nextQuestion = () => {
-  const payload = {
-    question: questions[currentQuestionIndex],
-  };
+  TriviaApi.fetchQuestion()
+  .then((question) => {
+    const payload = { question };
 
-  players.forEach((client) => {
-    if (client.ws.readyState !== 1) return; // guard against nonready clients
-    client.ws.send(JSON.stringify({
-      resource: 'round',
-      action: 'NEXT_QUESTION',
-      payload,
-    }));
-  });
-  moderators.forEach((client) => {
-    if (client.ws.readyState !== 1) return; // guard against nonready clients
-    client.ws.send(JSON.stringify({
-      resource: 'round',
-      action: 'NEXT_QUESTION',
-      payload,
-    }));
-  });
+    players.forEach((client) => {
+      if (client.ws.readyState !== 1) return; // guard against nonready clients
 
-  currentQuestionIndex += 1;
+      client.ws.send(JSON.stringify({
+        resource: 'round',
+        action: 'NEXT_QUESTION',
+        payload,
+      }));
+    });
+
+    moderators.forEach((client) => {
+      if (client.ws.readyState !== 1) return; // guard against nonready clients
+
+      client.ws.send(JSON.stringify({
+        resource: 'round',
+        action: 'NEXT_QUESTION',
+        payload,
+      }));
+    });
+  });
 };
 
 export const answer = (event) => {
