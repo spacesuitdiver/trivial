@@ -21,6 +21,11 @@ export default (state = initialState, action: any) => {
         ...state,
         status: 'connected',
       };
+    case types.ERROR:
+      return {
+        ...state,
+        status: 'error',
+      };
     default:
       return state;
   }

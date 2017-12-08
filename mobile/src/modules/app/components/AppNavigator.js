@@ -2,7 +2,8 @@ import { StackNavigator } from 'react-navigation';
 
 import { JoinScreen, QuestionScreen } from '../../round';
 
-const AppNavigator = StackNavigator(
+
+export default StackNavigator(
   {
     Join: { screen: JoinScreen },
     Question: { screen: QuestionScreen },
@@ -11,5 +12,3 @@ const AppNavigator = StackNavigator(
     headerMode: 'none',
   },
 );
-
-export default AppNavigator;

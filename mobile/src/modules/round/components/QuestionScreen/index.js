@@ -9,6 +9,15 @@ import AnswersList from '../AnswersList';
 
 
 class QuestionScreen extends React.Component {
+
+  componentDidUpdate() {
+    const { websocketStatus, navigation } = this.props;
+
+    if (websocketStatus === 'disconnected' || websocketStatus === 'error') {
+      navigation.goBack();
+    }
+  }
+
   render() {
     const { question } = this.props;
 
@@ -31,6 +40,7 @@ class QuestionScreen extends React.Component {
 
 const mapStateToProps = state => ({
   question: state.round.default.question,
+  websocketStatus: state.websocket.default.status,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,12 +1,11 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Image, View, Text, TouchableOpacity, TextInput, Button, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Dimensions } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { iOSColors, iOSUIKit, human } from 'react-native-typography';
 import * as roundActions from '../../actions';
 
-const { width: deviceWidth, height: deviceHeight } = Dimensions.get('window');
+const { width: deviceWidth } = Dimensions.get('window');
 
 class JoinScreen extends React.Component {
   state = {
@@ -14,16 +13,20 @@ class JoinScreen extends React.Component {
   };
 
   join = () => {
-    const { actions, navigation } = this.props;
+    const { actions, navigation, websocketStatus } = this.props;
 
-    actions.round.play(this.state.name);
-    navigation.navigate('Question');
+    if (websocketStatus === 'connected') {
+      actions.round.play(this.state.name);
+      navigation.navigate('Question');
+    } else {
+      alert('Please wait to be connected to server.');
+    }
   };
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 12 }}>
-        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Join Trivia</Text>
+        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Welcome</Text>
         <TextInput
           onChangeText={name => this.setState({ name })}
           value={this.state.name}
@@ -59,9 +62,9 @@ class JoinScreen extends React.Component {
   }
 }
 
-// const mapStateToProps = state => ({
-//   round: state.channel.default.round,
-// });
+const mapStateToProps = state => ({
+  websocketStatus: state.websocket.default.status,
+});
 
 const mapDispatchToProps = dispatch => ({
   actions: {
@@ -69,4 +72,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(JoinScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(JoinScreen);
