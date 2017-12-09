@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, ScrollView, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { iOSColors, iOSUIKit, human } from 'react-native-typography';
 import * as roundActions from '../../actions';
@@ -26,12 +26,12 @@ class QuestionScreen extends React.Component {
     const { question } = this.props;
 
     return (
-      <View style={{ flex: 1, backgroundColor: iOSColors.black, padding: 12 }}>
+      <View style={{ flex: 1, backgroundColor: iOSColors.black }}>
         {question ?
-          <View>
-            <Text style={human.bodyWhite}>{question.text}</Text>
+          <ScrollView style={{ flex: 1 }}>
+            <Text style={[human.bodyWhite, { marginVertical: 18, marginHorizontal: 12 }]}>{question.text}</Text>
             <AnswersList answers={question.answers} />
-          </View>
+          </ScrollView>
           :
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
             <Text style={[iOSUIKit.largeTitleEmphasizedWhite, { textAlign: 'center' }]}>Waiting for next question...</Text>

@@ -22,10 +22,6 @@ class AnswersList extends React.Component {
     return (
       <FlatList
         keyExtractor={(item, index) => index}
-        style={{
-        	marginTop: 12,
-        	backgroundColor: '#181819',
-        }}
         data={answers}
         showsVerticalScrollIndicator={false}
         renderItem={({ item: answer, index: answerIndex }) => (
@@ -33,13 +29,14 @@ class AnswersList extends React.Component {
             style={{
               flexDirection: 'row',
               alignItems: 'center',
-              padding: 12,
+              padding: 16,
               borderBottomWidth: 1,
               borderColor: iOSColors.black,
+              backgroundColor: '#181819',
             }}
             onPress={() => this.props.actions.round.answer({ answerIndex })}
           >
-            <Text style={{ color: 'white' }}>
+            <Text style={human.bodyWhite}>
               {answer}
             </Text>
           </TouchableOpacity>
