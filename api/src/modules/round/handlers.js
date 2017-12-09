@@ -18,9 +18,11 @@ export const play = (event) => {
   // add user to round
   players.push(player);
 
-  const payload = players.map(({ ws, ...rest }) => ({
-    ...rest,
-  }));
+  const payload = {
+    players: players.map(({ ws, ...rest }) => ({
+      ...rest,
+    })),
+  };
 
   // notify moderators of new user
   moderators.forEach((c) => {
@@ -42,8 +44,14 @@ export const moderate = (event) => {
 export const nextQuestion = () => {
   TriviaApi.fetchQuestion()
   .then((question) => {
-    const payload = { question };
     currentQuestion = question;
+
+    const payload = {
+      currentQuestion,
+      players: players.map(({ ws, ...rest }) => ({
+        ...rest,
+      })),
+    };
 
     players.forEach((client) => {
       if (client.ws.readyState !== 1) return; // guard against nonready clients
@@ -75,9 +83,11 @@ export const answer = ({ user, answerIndex }) => {
     }));
   }
 
-  const payload = players.map(({ ws, ...rest }) => ({
-    ...rest,
-  }));
+  const payload = {
+    players: players.map(({ ws, ...rest }) => ({
+      ...rest,
+    })),
+  };
 
   moderators.forEach((client) => {
     client.ws.send(JSON.stringify({
