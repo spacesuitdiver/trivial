@@ -12,7 +12,7 @@ export const play = (event) => {
     answerPhoto: 'http://thecatapi.com/api/images/get?format=src&type=gif',
     ...user,
     score: 0,
-    ws: event.ws,
+    ws,
   };
 
   // add user to round
@@ -47,7 +47,7 @@ export const nextQuestion = () => {
     currentQuestion = question;
 
     const payload = {
-      currentQuestion,
+      question,
       players: players.map(({ ws, ...rest }) => ({
         ...rest,
       })),
