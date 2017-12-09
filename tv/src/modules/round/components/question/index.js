@@ -3,20 +3,26 @@ import {
     View,
     Text,
     TouchableHighlight,
+    Stylesheet
 } from 'react-native';
 import { connect } from 'react-redux';
 
+import Screen from '../Screen';
+
+const styles = StyleSheet.create({
+  question: {
+    backgroundColor: 'transparent'
+  },
+  questionText: {
+    fontSize: 72,
+    textAlign: 'center'
+  }
+})
+
 const QuestionScreen = ({ question }) => (
-  <View>
-    { question && <Text>{ question.text }</Text>}
-    { question && question.answers.map((answer, index) =>
-      <TouchableHighlight
-        key={index}
-        onPress={console.log}
-      >
-        <Text>{answer}</Text>
-      </TouchableHighlight>) }
-  </View>
+  <Screen>
+    { question && <View style={styles.question}><Text style={styles.questionText}>{ question.text }</Text></View>}
+  </Screen>
 );
 
 const mapStateToProps = state => ({
