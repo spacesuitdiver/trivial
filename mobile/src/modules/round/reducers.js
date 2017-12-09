@@ -12,6 +12,12 @@ export default (state = initialState, { type, payload }) => {
         question: payload.question,
       };
     }
+    case types.ANSWER: {
+      return {
+        ...state,
+        question: null,
+      };
+    }
     default: {
       return state;
     }

@@ -1,4 +1,5 @@
 import { Constants } from 'expo';
+import * as types from './types';
 import { send } from '../../websocket';
 
 export const play = name => () => {
@@ -14,9 +15,11 @@ export const play = name => () => {
   });
 };
 
-export const answer = ({ answerIndex }) => () => {
+export const answer = ({ answerIndex }) => (dispatch) => {
   const { deviceId } = Constants;
-console.log(answerIndex);
+
+  dispatch({ type: types.ANSWER });
+
   send({
     resource: 'round',
     action: 'answer',
