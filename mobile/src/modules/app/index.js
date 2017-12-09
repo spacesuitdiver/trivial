@@ -1,6 +1,6 @@
-import App from './components/App';
+import AppNavigator from './components/AppNavigator';
 
 export {
-  App,
+  AppNavigator,
 };
 

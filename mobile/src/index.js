@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 import { store } from './redux';
 import * as WebSocket from './websocket';
 import { WebSocketStatusBar } from './modules/websocket';
-import { App } from './modules/app';
+import { AppNavigator } from './modules/app';
 
 export default class extends Component {
   componentDidMount() {
@@ -19,11 +19,11 @@ export default class extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: '#0F0F0F' }}>
+      <View style={{ flex: 1 }}>
         <Provider store={store}>
           <View style={{ flex: 1 }}>
+            <AppNavigator />
             <WebSocketStatusBar />
-            <App />
           </View>
         </Provider>
       </View>
