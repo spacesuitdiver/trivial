@@ -22,8 +22,8 @@ export default class extends Component {
       <View style={{ flex: 1 }}>
         <Provider store={store}>
           <View style={{ flex: 1 }}>
-            <WebSocketStatusBar />
             <AppNavigator />
+            <WebSocketStatusBar />
           </View>
         </Provider>
       </View>
