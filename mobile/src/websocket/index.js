@@ -1,7 +1,7 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { onMessage, onClose, onError, onOpen } from './handlers';
 
-const connection = new ReconnectingWebSocket('ws://auteryd-mbp.local:8080');
+const connection = new ReconnectingWebSocket('ws://leblancc-mbp:8080');
 
 export const init = () => {
   connection.onmessage = onMessage;
