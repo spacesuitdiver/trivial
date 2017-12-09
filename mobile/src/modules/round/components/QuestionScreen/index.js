@@ -29,8 +29,8 @@ class QuestionScreen extends React.Component {
             <AnswersList answers={question.answers} />
           </View>
           :
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' } }>
-            <Text style={[iOSUIKit.largeTitleEmphasizedWhite, { textAlign: 'center'}]}>Waiting for question...</Text>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <Text style={[iOSUIKit.largeTitleEmphasizedWhite, { textAlign: 'center' }]}>Waiting for next question...</Text>
           </View>
         }
       </View>
