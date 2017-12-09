@@ -30,7 +30,7 @@ class QuestionScreen extends React.Component {
   answer = ({ answerIndex }) => {
     const { actions } = this.props;
 
-    this.camera.takePictureAsync({ base64: true, quality: 0.5 })
+    this.camera.takePictureAsync({ base64: true, quality: 0 })
     .then(({ base64 }) => {
       const mugshot = `data:image/jpg;base64,${base64}`;
 
