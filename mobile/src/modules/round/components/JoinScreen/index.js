@@ -25,7 +25,7 @@ class JoinScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 12 }}>
+      <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 20 }}>
         <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Welcome</Text>
         <TextInput
           onChangeText={name => this.setState({ name })}
@@ -36,7 +36,7 @@ class JoinScreen extends React.Component {
               color: iOSColors.lightGray,
               borderRadius: 8,
               padding: 12,
-              marginTop: 8,
+              marginTop: 16,
             },
           ]}
           placeholder="What is your name?"
@@ -51,11 +51,11 @@ class JoinScreen extends React.Component {
             style={{
               borderRadius: 8,
               backgroundColor: iOSColors.orange,
-              marginTop: 8,
+              marginTop: 10,
               padding: 12,
             }}
           >
-            <Text style={[human.bodyWhite, { textAlign: 'center' }]}>Join!</Text>
+            <Text style={[human.bodyWhite, { textAlign: 'center', fontWeight: 'bold' }]}>Join!</Text>
           </View>
         </TouchableOpacity>
       </View>

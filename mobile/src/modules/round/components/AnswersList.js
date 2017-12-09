@@ -1,55 +1,42 @@
 import React from 'react';
 import {
-  FlatList,
   View,
   TouchableOpacity,
   Text,
-  Dimensions,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { iOSColors, iOSUIKit, human } from 'react-native-typography';
-
-import * as roundActions from '../actions';
-
-const { width: deviceWidth } = Dimensions.get('window');
+import { iOSColors, human } from 'react-native-typography';
 
 class AnswersList extends React.Component {
 
   render() {
-    const { answers, actions } = this.props;
+    const { answers, onAnswerPress, style } = this.props;
 
     return (
-      <FlatList
-        keyExtractor={(item, index) => index}
-        data={answers}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item: answer, index: answerIndex }) => (
+      <View style={style}>
+        {answers.map((answer, answerIndex) =>
           <TouchableOpacity
+            key={answerIndex}
             style={{
               flexDirection: 'row',
               alignItems: 'center',
+              marginVertical: 4,
               padding: 16,
-              borderBottomWidth: 1,
+              borderRadius: 8,
               borderColor: iOSColors.black,
-              backgroundColor: '#181819',
+              backgroundColor: 'rgba(0,0,0,0.5)',
             }}
-            onPress={() => this.props.actions.round.answer({ answerIndex })}
+            onPress={() => onAnswerPress({ answerIndex })}
           >
-            <Text style={human.bodyWhite}>
-              {answer}
-            </Text>
-          </TouchableOpacity>
+            <View style={{ flex: 1 }}>
+              <Text style={[human.bodyWhite, { textAlign: 'center', fontWeight: 'bold' }]}>
+                {answer}
+              </Text>
+            </View>
+          </TouchableOpacity>,
         )}
-      />
+      </View>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  actions: {
-    round: bindActionCreators(roundActions, dispatch),
-  },
-});
-
-export default connect(null, mapDispatchToProps)(AnswersList);
+export default AnswersList;

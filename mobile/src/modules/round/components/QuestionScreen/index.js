@@ -1,6 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { View, ScrollView, Text } from 'react-native';
+import { Camera, BlurView } from 'expo';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { iOSColors, iOSUIKit, human } from 'react-native-typography';
 import * as roundActions from '../../actions';
@@ -22,15 +23,38 @@ class QuestionScreen extends React.Component {
     }
   }
 
+  answer = ({ answerIndex }) => {
+    const { actions } = this.props;
+
+    actions.question.answer({ answerIndex });
+  };
+
   render() {
     const { question } = this.props;
 
     return (
-      <View style={{ flex: 1, backgroundColor: iOSColors.black }}>
+      <View style={{ flex: 1, justifyContent: 'center', backgroundColor: iOSColors.black }}>
+        <Camera
+          style={{ position: 'absolute', top: 0, right: 0, left: 0, bottom: 0 }}
+          type={Camera.Constants.Type.front}
+          ref={(ref) => { this.camera = ref; }}
+        />
+        <BlurView tint="dark" intensity={85} style={{ position: 'absolute', top: 0, right: 0, left: 0, bottom: 0 }} />
         {question ?
-          <ScrollView style={{ flex: 1 }}>
-            <Text style={[human.bodyWhite, { marginVertical: 18, marginHorizontal: 12 }]}>{question.text}</Text>
-            <AnswersList answers={question.answers} />
+          <ScrollView
+            style={{ padding: 20 }}
+            contentContainerStyle={{
+              flexGrow: 1,
+              justifyContent: 'center',
+            }}
+          >
+            <Text
+              style={[human.title2White, { marginBottom: 16 }]}
+            >{question.text}</Text>
+            <AnswersList
+              onAnswerPress={({ answerIndex }) => this.answer({ answerIndex })}
+              answers={question.answers}
+            />
           </ScrollView>
           :
           <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
