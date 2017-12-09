@@ -5,6 +5,7 @@ import expressWs from 'express-ws';
 import logger from './logger';
 import { middlewares } from './express';
 
+import store from './store';
 import { handlers } from './modules';
 
 const wss = expressWs(express());
@@ -26,9 +27,13 @@ app.ws('/', (ws, req) => {
   });
 });
 
-app.use('/nextQuestion', (req, res) => {
+app.get('/nextQuestion', (req, res) => {
   handlers.round.nextQuestion();
-  res.send('OK');
+  res.send({
+    ...store,
+    players: store.players.map(({ ws, ...rest }) => rest),
+    moderators: store.moderators.map(({ ws, ...rest }) => rest),
+  });
 });
 
 const port = process.env.PORT || 8080;

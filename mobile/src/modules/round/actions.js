@@ -9,13 +9,13 @@ export const play = name => () => {
     resource: 'round',
     action: 'play',
     user: {
-      name,
       deviceId,
+      name,
     },
   });
 };
 
-export const answer = ({ answerIndex }) => (dispatch) => {
+export const answer = ({ answerIndex, mugshot }) => (dispatch) => {
   const { deviceId } = Constants;
 
   dispatch({ type: types.ANSWER });
@@ -23,9 +23,12 @@ export const answer = ({ answerIndex }) => (dispatch) => {
   send({
     resource: 'round',
     action: 'answer',
-    user: {
-      deviceId,
+    payload: {
+      user: {
+        deviceId,
+        mugshot,
+      },
+      answerIndex,
     },
-    answerIndex,
   });
 };

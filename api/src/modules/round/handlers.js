@@ -1,31 +1,24 @@
 import * as TriviaApi from '../../apis/opentdb';
-import logger from '../../logger';
-
-let players = [];
-const moderators = [];
-
-let currentQuestion = null;
+import store from '../../store';
 
 export const play = (event) => {
   const { ws, user } = event;
   const player = {
-    answerPhoto: 'http://thecatapi.com/api/images/get?format=src&type=gif',
+    mugshot: 'http://thecatapi.com/api/images/get?format=src&type=gif',
     ...user,
     score: 0,
     ws,
   };
 
   // add user to round
-  players.push(player);
+  store.players.push(player);
 
   const payload = {
-    players: players.map(({ ws, ...rest }) => ({
-      ...rest,
-    })),
+    players: store.players.map(({ ws, ...rest }) => rest),
   };
 
   // notify moderators of new user
-  moderators.forEach((c) => {
+  store.moderators.forEach((c) => {
     c.ws.send(JSON.stringify({
       resource: 'round',
       action: 'PLAY',
@@ -38,22 +31,20 @@ export const moderate = (event) => {
   const { ws, user } = event;
   const client = { ws, user };
 
-  moderators.push(client);
+  store.moderators.push(client);
 };
 
 export const nextQuestion = () => {
   TriviaApi.fetchQuestion()
   .then((question) => {
-    currentQuestion = question;
+    store.currentQuestion = question;
 
     const payload = {
       question,
-      players: players.map(({ ws, ...rest }) => ({
-        ...rest,
-      })),
+      players: store.players.map(({ ws, ...rest }) => rest),
     };
 
-    players.forEach((client) => {
+    store.players.forEach((client) => {
       if (client.ws.readyState !== 1) return; // guard against nonready clients
 
       client.ws.send(JSON.stringify({
@@ -63,7 +54,7 @@ export const nextQuestion = () => {
       }));
     });
 
-    moderators.forEach((client) => {
+    store.moderators.forEach((client) => {
       if (client.ws.readyState !== 1) return; // guard against nonready clients
 
       client.ws.send(JSON.stringify({
@@ -75,21 +66,20 @@ export const nextQuestion = () => {
   });
 };
 
-export const answer = ({ user, answerIndex }) => {
-  if (answerIndex === currentQuestion.answerIndex) {
-    players = players.map(oldPlayer => ({
+export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
+  if (answerIndex === store.currentQuestion.answerIndex) {
+    store.players = store.players.map(oldPlayer => ({
       ...oldPlayer,
+      mugshot,
       score: oldPlayer.deviceId === user.deviceId ? oldPlayer.score + 1 : oldPlayer.score,
     }));
   }
 
   const payload = {
-    players: players.map(({ ws, ...rest }) => ({
-      ...rest,
-    })),
+    players: store.players.map(({ ws, ...rest }) => rest),
   };
 
-  moderators.forEach((client) => {
+  store.moderators.forEach((client) => {
     client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'ANSWER',
