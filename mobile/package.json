@@ -9,7 +9,7 @@
     "expo": "^23.0.0",
     "react": "16.0.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-23.0.0.tar.gz",
-    "react-native-typography": "LeBlaaanc/react-native-typography#bugfix/android-crash-on-undefined-letter-spacing",
+    "react-native-typography": "^1.0.3",
     "react-navigation": "^1.0.0-beta.21",
     "react-redux": "^5.0.6",
     "reconnecting-websocket": "^3.2.2",
