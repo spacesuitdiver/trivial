@@ -10,6 +10,10 @@ import AnswersList from '../AnswersList';
 
 class QuestionScreen extends React.Component {
 
+  static navigationOptions = {
+    gesturesEnabled: false,
+  };
+
   componentDidUpdate() {
     const { websocketStatus, navigation } = this.props;
 
