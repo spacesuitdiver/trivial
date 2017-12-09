@@ -8,9 +8,8 @@ export const fetchQuestion = () => fetch(url())
   .then(response => (response.ok ? response.json() : Promise.reject(response)))
   .then(({ results }) => {
     const result = results[0];
-
-    const htmlEncodedAnswers = result.incorrect_answers.concat(result.correct_answer);
-    const answers = _.shuffle(htmlEncodedAnswers.map(html => he.decode(html)));
+    const htmlEncodedAnswers = _.shuffle(result.incorrect_answers.concat(result.correct_answer));
+    const answers = htmlEncodedAnswers.map(html => he.decode(html));
 
     return {
       text: he.decode(result.question),

@@ -1,22 +1,33 @@
 import * as TriviaApi from '../../apis/opentdb';
 import logger from '../../logger';
 
-const players = [];
+let players = [];
 const moderators = [];
+
+let currentQuestion = null;
 
 export const play = (event) => {
   const { ws, user } = event;
-  const client = { ws, user };
+  const player = {
+    answerPhoto: 'http://thecatapi.com/api/images/get?format=src&type=gif',
+    ...user,
+    score: 0,
+    ws: event.ws,
+  };
 
   // add user to round
-  players.push(client);
+  players.push(player);
+
+  const payload = players.map(({ ws, ...rest }) => ({
+    ...rest,
+  }));
 
   // notify moderators of new user
   moderators.forEach((c) => {
     c.ws.send(JSON.stringify({
       resource: 'round',
       action: 'PLAY',
-      user,
+      payload,
     }));
   });
 };
@@ -32,6 +43,7 @@ export const nextQuestion = () => {
   TriviaApi.fetchQuestion()
   .then((question) => {
     const payload = { question };
+    currentQuestion = question;
 
     players.forEach((client) => {
       if (client.ws.readyState !== 1) return; // guard against nonready clients
@@ -55,9 +67,17 @@ export const nextQuestion = () => {
   });
 };
 
-export const answer = (event) => {
-  const { user, answerIndex } = event;
-  const payload = { user, answerIndex };
+export const answer = ({ user, answerIndex }) => {
+  if (answerIndex === currentQuestion.answerIndex) {
+    players = players.map(oldPlayer => ({
+      ...oldPlayer,
+      score: oldPlayer.deviceId === user.deviceId ? oldPlayer.score + 1 : oldPlayer.score,
+    }));
+  }
+
+  const payload = players.map(({ ws, ...rest }) => ({
+    ...rest,
+  }));
 
   moderators.forEach((client) => {
     client.ws.send(JSON.stringify({

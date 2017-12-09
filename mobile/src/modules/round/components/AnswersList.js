@@ -28,7 +28,7 @@ class AnswersList extends React.Component {
         }}
         data={answers}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item: answer, index }) => (
+        renderItem={({ item: answer, index: answerIndex }) => (
           <TouchableOpacity
             style={{
               flexDirection: 'row',
@@ -37,6 +37,7 @@ class AnswersList extends React.Component {
               borderBottomWidth: 1,
               borderColor: iOSColors.black,
             }}
+            onPress={() => this.props.actions.round.answer({ answerIndex })}
           >
             <Text style={{ color: 'white' }}>
               {answer}
