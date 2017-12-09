@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "start": "./node_modules/.bin/nodemon index.js | ./node_modules/.bin/bunyan"
+    "start": "./node_modules/.bin/nodemon --inspect index.js | ./node_modules/.bin/bunyan"
   },
   "dependencies": {
     "babel-cli": "^6.24.0",
