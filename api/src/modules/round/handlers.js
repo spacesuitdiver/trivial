@@ -19,6 +19,8 @@ export const play = (event) => {
 
   // notify moderators of new user
   store.moderators.forEach((c) => {
+    if (c.ws.readyState !== 1) return; // guard against nonready clients
+
     c.ws.send(JSON.stringify({
       resource: 'round',
       action: 'PLAY',
