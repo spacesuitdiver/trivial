@@ -1,7 +1,6 @@
 import { Animated } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-// import { CategoriesScreen, CategoryScreen } from '../../category';
 import { Question, Welcome } from '../../round';
 
 const fade = () => ({
