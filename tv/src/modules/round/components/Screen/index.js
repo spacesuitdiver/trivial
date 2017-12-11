@@ -8,7 +8,6 @@ import AnimatedLinearGradient, { presetColors } from 'react-native-animated-line
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -17,16 +16,20 @@ const styles = StyleSheet.create({
     top: 0,
     right: 0,
     bottom: 0,
-    left: 0, 
-    zIndex: 0
-  }
+    left: 0,
+    zIndex: 0,
+  },
 });
 
-const Screen = (props) => (
+const Screen = props => (
   <View
     style={styles.screen}
   >
-    <AnimatedLinearGradient customColors={presetColors.firefox} speed={2000} style={styles.gradient} />
+    <AnimatedLinearGradient
+      customColors={presetColors.firefox}
+      speed={2000}
+      style={styles.gradient}
+    />
     { props.children }
   </View>
 );
