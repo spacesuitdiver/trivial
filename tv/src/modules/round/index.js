@@ -1,11 +1,11 @@
 import reducer from './reducer';
-import Answer from './components/answer';
-import Question from './components/question';
-import Welcome from './components/welcome';
+import Question from './components/Question';
+import Welcome from './components/Welcome';
+import Winner from './components/Winner';
 
 export {
     reducer,
-    Answer,
     Question,
     Welcome,
+    Winner,
 };
