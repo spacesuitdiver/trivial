@@ -3,6 +3,8 @@ import store from '../../store';
 
 export const play = (event) => {
   const { ws, user } = event;
+
+  // initialize a new player
   const player = {
     mugshot: 'http://thecatapi.com/api/images/get?format=src&type=gif',
     ...user,
@@ -13,11 +15,11 @@ export const play = (event) => {
   // add user to round
   store.players.push(player);
 
+  // notify moderators of new user
   const payload = {
     players: store.players.map(({ ws, ...rest }) => rest),
   };
 
-  // notify moderators of new user
   store.moderators.forEach((c) => {
     if (c.ws.readyState !== 1) return; // guard against nonready clients
 
@@ -33,17 +35,20 @@ export const moderate = (event) => {
   const { ws, user } = event;
   const client = { ws, user };
 
+  // add moderator to round
   store.moderators.push(client);
 };
 
 export const nextQuestion = () => {
+  // fetch a new question, as if we needed this comment
   TriviaApi.fetchQuestion()
   .then((question) => {
+    // store the question in the store, ehem again as if we need this comment
     store.currentQuestion = question;
 
-    const payload = {
+    // send question and players to players and moderators
+    const payloadForPlayers = {
       question,
-      players: store.players.map(({ ws, ...rest }) => rest),
     };
 
     store.players.forEach((client) => {
@@ -52,9 +57,15 @@ export const nextQuestion = () => {
       client.ws.send(JSON.stringify({
         resource: 'round',
         action: 'NEXT_QUESTION',
-        payload,
+        payload: payloadForPlayers,
       }));
     });
+
+    // send question and players to players and moderators
+    const payloadForModerators = {
+      question,
+      players: store.players.map(({ ws, ...rest }) => rest),
+    };
 
     store.moderators.forEach((client) => {
       if (client.ws.readyState !== 1) return; // guard against nonready clients
@@ -62,21 +73,25 @@ export const nextQuestion = () => {
       client.ws.send(JSON.stringify({
         resource: 'round',
         action: 'NEXT_QUESTION',
-        payload,
+        payload: payloadForModerators,
       }));
     });
   });
 };
 
 export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
-  if (answerIndex === store.currentQuestion.answerIndex) {
-    store.players = store.players.map(oldPlayer => ({
-      ...oldPlayer,
-      mugshot,
-      score: oldPlayer.deviceId === user.deviceId ? oldPlayer.score + 1 : oldPlayer.score,
-    }));
-  }
+  // update the player mugshot and score in the store
+  store.players = store.players.map(oldPlayer => ({
+    ...oldPlayer,
+    mugshot,
+    score:
+      answerIndex === store.currentQuestion.answerIndex &&
+      oldPlayer.deviceId === user.deviceId ?
+        oldPlayer.score + 1 :
+        oldPlayer.score,
+  }));
 
+  // send players to moderators
   const payload = {
     players: store.players.map(({ ws, ...rest }) => rest),
   };
