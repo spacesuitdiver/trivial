@@ -51,7 +51,7 @@ export const nextQuestion = () => {
     // store the question in the store, ehem again as if we need this comment
     store.currentQuestion = question;
 
-    // send question and players to players and moderators
+    // send question to players
     const payloadForPlayers = {
       question,
     };
@@ -67,9 +67,14 @@ export const nextQuestion = () => {
     });
 
     // send question and players to players and moderators
+    const players = store.players.map(({ ws, ...player }) => ({
+      ...player,
+      mugshot: null,
+    }));
+
     const payloadForModerators = {
       question,
-      players: store.players.map(({ ws, ...rest }) => rest),
+      players,
     };
 
     store.moderators.forEach((client) => {
@@ -110,15 +115,19 @@ export const moderate = (event) => {
 
 export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
   // update the player mugshot and score in the store
-  store.players = store.players.map(oldPlayer => ({
-    ...oldPlayer,
-    mugshot,
-    score:
-      answerIndex === store.currentQuestion.answerIndex &&
-      oldPlayer.deviceId === user.deviceId ?
-        oldPlayer.score + 1 :
-        oldPlayer.score,
-  }));
+  store.players = store.players.map((player) => {
+    if (player.deviceId === user.deviceId) {
+      return {
+        ...player,
+        ...user,
+        mugshot,
+        score: answerIndex === store.currentQuestion.answerIndex ?
+          player.score + 1 :
+          player.score,
+      };
+    }
+    return player;
+  });
 
   // send players to moderators
   const payload = {

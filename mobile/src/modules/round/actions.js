@@ -26,8 +26,8 @@ export const answer = ({ answerIndex, mugshot }) => (dispatch) => {
     payload: {
       user: {
         deviceId,
-        mugshot,
       },
+      mugshot,
       answerIndex,
     },
   });

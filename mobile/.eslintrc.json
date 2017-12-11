@@ -18,6 +18,7 @@
     "no-underscore-dangle": [0],
     "import/no-named-as-default": [0],
     "react/jsx-filename-extension": [0],
+    "react/no-unescaped-entities": 0,
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,
     "react-native/no-inline-styles": 0,
