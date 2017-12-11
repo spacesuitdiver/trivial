@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 const colors = {
   white: 'white',
   black: 'black',
+  transparent: 'transparent',
 };
 
 const styles = StyleSheet.create({
@@ -38,6 +39,12 @@ const styles = StyleSheet.create({
     shadowOffset: { height: 2, width: 0 },
     marginBottom: 10,
   },
+  cardInner: {
+    flex: 0,
+    flexDirection: 'column',
+    alignItems: 'center',
+    marginBottom: 20,
+  },
   cardText: {
     fontSize: 36,
     color: colors.white,
@@ -52,16 +59,26 @@ const styles = StyleSheet.create({
     height: 180,
     width: 360,
   },
+  scrollView: {
+    flexShrink: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingTop: 30,
+  },
+  textWrapper: {
+    backgroundColor: colors.transparent,
+  },
 });
 
 const Players = ({ players }) => (
   <ScrollView>
-    <View style={{ flexShrink: 1, flexWrap: 'wrap', flexDirection: 'row', alignItems: 'center', paddingTop: 30 }}>
+    <View style={styles.scrollView}>
       {
-        players.map((player, index) =>
+        players.map(player =>
           (<View key={player.deviceId} style={styles.cardWrapper}>
             <TouchableHighlight
-              onPress={() => console.log(index)}
+              onPress={console.log}
               underlayColor="transparent"
               tvParallaxProperties={{
                 enabled: true,
@@ -69,13 +86,14 @@ const Players = ({ players }) => (
                 activeOpacity: 1,
               }}
             >
-              <View style={{ flex: 0, flexDirection: 'column', alignItems: 'center', marginBottom: 20 }}>
+              <View style={styles.cardInner}>
                 <View style={styles.card}>
                   <View style={styles.imageWrapper}>
-                    <Image style={styles.image} source={{ uri: player.mugshot }} />
+                    <Image style={styles.image} source={{ uri: player.mugshot || '' }} />
+                    <Text>Score: { player.score }</Text>
                   </View>
                 </View>
-                <View style={{ backgroundColor: 'transparent' }}>
+                <View style={styles.textWrapper}>
                   <Text
                     style={styles.cardText}
                     numberOfLines={1}
