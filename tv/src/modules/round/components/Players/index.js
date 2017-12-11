@@ -72,7 +72,7 @@ const Players = ({ players }) => (
               <View style={{ flex: 0, flexDirection: 'column', alignItems: 'center', marginBottom: 20 }}>
                 <View style={styles.card}>
                   <View style={styles.imageWrapper}>
-                    <Image style={styles.image} source={{ uri: player.mugshot }} />
+                    {player.mugshot && <Image style={styles.image} source={{ uri: player.mugshot }} />}
                   </View>
                 </View>
                 <View style={{ backgroundColor: 'transparent' }}>
@@ -80,7 +80,7 @@ const Players = ({ players }) => (
                     style={styles.cardText}
                     numberOfLines={1}
                   >
-                    {player.name}
+                    {player.name} - {player.status}
                   </Text>
                 </View>
               </View>

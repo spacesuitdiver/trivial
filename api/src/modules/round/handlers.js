@@ -11,6 +11,7 @@ export const play = (event) => {
       mugshot: null,
       ...newPlayer,
       score: 0,
+      status: 'joined', // joined, answering, answered
       ws,
     });
   } else {
@@ -69,6 +70,7 @@ export const nextQuestion = () => {
     // send question and players to players and moderators
     const players = store.players.map(({ ws, ...player }) => ({
       ...player,
+      status: 'answering',
       mugshot: null,
     }));
 
@@ -121,6 +123,7 @@ export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
         ...player,
         ...user,
         mugshot,
+        status: 'answered',
         score: answerIndex === store.currentQuestion.answerIndex ?
           player.score + 1 :
           player.score,
