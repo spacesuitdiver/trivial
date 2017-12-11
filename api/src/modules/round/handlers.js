@@ -14,7 +14,7 @@ export const play = (event) => {
       ws,
     });
   } else {
-    // update existing user's ws if already playing
+    // update existing user's if already playing
     store.players = store.players.map((player) => {
       if (player.deviceId === newPlayer.deviceId) {
         return {
@@ -86,10 +86,23 @@ export const nextQuestion = () => {
 
 export const moderate = (event) => {
   const { ws, user } = event;
-  const client = { ws, user };
+  const newModerator = { ws, user };
 
-  // add moderator to round
-  store.moderators.push(client);
+  // add moderator to round if not already moderating
+  if (!store.players.some(({ deviceId }) => deviceId === newModerator.deviceId)) {
+    store.moderators.push(newModerator);
+  } else {
+    // update existing moderators's ws if already playing
+    store.moderators = store.moderators.map((moderator) => {
+      if (moderator.deviceId === newModerator.deviceId) {
+        return {
+          ...newModerator,
+          ws, // new connection
+        };
+      }
+      return moderator;
+    });
+  }
 
   // progress the question
   nextQuestion();
@@ -99,7 +112,7 @@ export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
   // update the player mugshot and score in the store
   store.players = store.players.map(oldPlayer => ({
     ...oldPlayer,
-    mugshot: 'http://thecatapi.com/api/images/get?format=src&type=gif',
+    mugshot,
     score:
       answerIndex === store.currentQuestion.answerIndex &&
       oldPlayer.deviceId === user.deviceId ?
