@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import { Animated, Text } from 'react-native';
+import { Constants } from 'expo';
 import { connect } from 'react-redux';
 
-class WebSocketStatusBar extends Component {
+const wsStatusBarHeight = Constants.statusBarHeight + 18;
 
+class WebSocketStatusBar extends Component {
   componentDidUpdate() {
     const { status } = this.props;
 
     switch (status) {
       case 'connected': {
         Animated.spring(this.animations.barPosition, {
-          toValue: -21,
+          toValue: -wsStatusBarHeight,
           delay: 1000,
           useNativeDriver: true,
         }).start();
@@ -51,13 +53,15 @@ class WebSocketStatusBar extends Component {
           top: 0,
           left: 0,
           right: 0,
+          justifyContent: 'flex-end',
+          height: wsStatusBarHeight,
           backgroundColor: status === 'connected' ? 'green' : 'red',
           transform: [{
             translateY: this.animations.barPosition,
           }],
         }}
       >
-        <Text style={{ fontSize: 12, textAlign: 'center', paddingVertical: 2, color: 'white' }}>{this.renderStatusMessage()}</Text>
+        <Text style={{ fontSize: 12, textAlign: 'center', paddingVertical: 4, color: 'white' }}>{this.renderStatusMessage()}</Text>
       </Animated.View>
     );
   }

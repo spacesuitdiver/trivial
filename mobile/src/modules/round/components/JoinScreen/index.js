@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, Text, TouchableOpacity, TextInput, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, Dimensions, Alert } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { iOSColors, iOSUIKit, human } from 'react-native-typography';
 import * as roundActions from '../../actions';
@@ -19,14 +19,14 @@ class JoinScreen extends React.Component {
       actions.round.play(this.state.name);
       navigation.navigate('Question');
     } else {
-      alert('Please wait to be connected to server.');
+      Alert.alert('🏎 Woh there turbo!', 'Please wait to be connected to server.');
     }
   };
 
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 20 }}>
-        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Welcome</Text>
+        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Let's play trivia!</Text>
         <TextInput
           onChangeText={name => this.setState({ name })}
           value={this.state.name}

@@ -12,7 +12,7 @@ import { AppNavigator } from './modules/app';
 
 export default class extends Component {
   componentDidMount() {
-    StatusBar.setHidden(true);
+    StatusBar.setBarStyle('light-content');
     WebSocket.init();
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
   }
