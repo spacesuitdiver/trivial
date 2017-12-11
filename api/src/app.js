@@ -36,6 +36,14 @@ app.get('/nextQuestion', (req, res) => {
   });
 });
 
+app.get('/store', (req, res) => {
+  res.send({
+    ...store,
+    players: store.players.map(({ ws, ...rest }) => rest),
+    moderators: store.moderators.map(({ ws, ...rest }) => rest),
+  });
+});
+
 const port = process.env.PORT || 8080;
 app.listen(port);
 logger.info(`Listening on http://${os.hostname()}:${port}.`);
