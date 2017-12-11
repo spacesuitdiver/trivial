@@ -4,22 +4,20 @@ import store from '../../store';
 export const play = (event) => {
   const { ws, user } = event;
 
-  // initialize a new player
-  const newPlayer = {
-    mugshot: null,
-    ...user,
-    score: 0,
-    ws,
-  };
-
   // add user to round if not already playing
-  if (!store.players.some(({ deviceId }) => deviceId === newPlayer.deviceId)) {
-    store.players.push(newPlayer);
+  if (!store.players.some(({ deviceId }) => deviceId === user.deviceId)) {
+    // initialize a new user
+    store.players.push({
+      mugshot: null,
+      ...user,
+      score: 0, // no hacks allowed
+      ws,
+    });
   } else {
-    // update existing user if they are already playing
+    // update existing user's ws if already playing
     store.players = store.players.map((player) => {
-      if (player.deviceId === newPlayer.deviceId) {
-        return { ...player, ...newPlayer };
+      if (player.deviceId === user.deviceId) {
+        return { ...player, ws };
       }
       return player;
     });
