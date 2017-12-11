@@ -89,7 +89,7 @@ const Players = ({ players }) => (
               <View style={styles.cardInner}>
                 <View style={styles.card}>
                   <View style={styles.imageWrapper}>
-                    <Image style={styles.image} source={{ uri: player.mugshot || '' }} />
+                    {player.mugshot && <Image style={styles.image} source={{ uri: player.mugshot }} />}
                     <Text>Score: { player.score }</Text>
                   </View>
                 </View>
@@ -98,7 +98,7 @@ const Players = ({ players }) => (
                     style={styles.cardText}
                     numberOfLines={1}
                   >
-                    {player.name}
+                    {player.name} - {player.status}
                   </Text>
                 </View>
               </View>
