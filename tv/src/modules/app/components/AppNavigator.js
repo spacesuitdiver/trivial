@@ -1,7 +1,7 @@
 import { Animated } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 
-import { Question, Welcome } from '../../round';
+import { Question, Welcome, Winner } from '../../round';
 
 const fade = () => ({
   transitionSpec: {
@@ -25,6 +25,7 @@ const AppNavigator = StackNavigator(
   {
     Welcome: { screen: Welcome },
     Question: { screen: Question },
+    Winner: { screen: Winner },
   },
   {
     headerMode: 'none',
