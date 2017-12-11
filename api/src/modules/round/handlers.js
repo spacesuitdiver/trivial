@@ -5,15 +5,25 @@ export const play = (event) => {
   const { ws, user } = event;
 
   // initialize a new player
-  const player = {
-    mugshot: 'http://thecatapi.com/api/images/get?format=src&type=gif',
+  const newPlayer = {
+    mugshot: null,
     ...user,
     score: 0,
     ws,
   };
 
-  // add user to round
-  store.players.push(player);
+  // add user to round if not already playing
+  if (!store.players.some(({ deviceId }) => deviceId === newPlayer.deviceId)) {
+    store.players.push(newPlayer);
+  } else {
+    // update existing user if they are already playing
+    store.players = store.players.map((player) => {
+      if (player.deviceId === newPlayer.deviceId) {
+        return { ...player, ...newPlayer };
+      }
+      return player;
+    });
+  }
 
   // notify moderators of new user
   const payload = {
