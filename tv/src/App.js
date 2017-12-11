@@ -24,7 +24,7 @@ class App extends Component {
 
   _enableTVEventHandler() {
     this._tvEventHandler = new TVEventHandler();
-    this._tvEventHandler.enable(this, (cmp, evt) => {});
+    this._tvEventHandler.enable(this, (cmp, evt) => { console.log(evt); });
   }
 
   _disableTVEventHandler() {
