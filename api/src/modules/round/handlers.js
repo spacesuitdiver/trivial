@@ -2,22 +2,27 @@ import * as TriviaApi from '../../apis/opentdb';
 import store from '../../store';
 
 export const play = (event) => {
-  const { ws, user } = event;
+  const { ws, user: newPlayer } = event;
 
   // add user to round if not already playing
-  if (!store.players.some(({ deviceId }) => deviceId === user.deviceId)) {
+  if (!store.players.some(({ deviceId }) => deviceId === newPlayer.deviceId)) {
     // initialize a new user
     store.players.push({
       mugshot: null,
-      ...user,
-      score: 0, // no hacks allowed
+      ...newPlayer,
+      score: 0,
       ws,
     });
   } else {
     // update existing user's ws if already playing
     store.players = store.players.map((player) => {
-      if (player.deviceId === user.deviceId) {
-        return { ...player, ws };
+      if (player.deviceId === newPlayer.deviceId) {
+        return {
+          ...player,
+          ...newPlayer,
+          score: player.score,  // keep score
+          ws, // new connection
+        };
       }
       return player;
     });
