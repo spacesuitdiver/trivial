@@ -38,21 +38,14 @@ const styles = StyleSheet.create({
 });
 
 class Welcome extends React.Component {
-  componentDidMount() {
-    setTimeout(() => send({
+  begin = () => {
+    send({
       resource: 'round',
       action: 'moderate',
       user: {
         name: 'Apple Tv',
         deviceId: '1',
       },
-    }), 1000);
-  }
-
-  begin = () => {
-    send({
-      resource: 'round',
-      action: 'nextQuestion',
     });
     this.props.navigation.navigate('Question');
   };

@@ -31,14 +31,6 @@ export const play = (event) => {
   });
 };
 
-export const moderate = (event) => {
-  const { ws, user } = event;
-  const client = { ws, user };
-
-  // add moderator to round
-  store.moderators.push(client);
-};
-
 export const nextQuestion = () => {
   // fetch a new question, as if we needed this comment
   TriviaApi.fetchQuestion()
@@ -79,11 +71,22 @@ export const nextQuestion = () => {
   });
 };
 
+export const moderate = (event) => {
+  const { ws, user } = event;
+  const client = { ws, user };
+
+  // add moderator to round
+  store.moderators.push(client);
+
+  // progress the question
+  nextQuestion();
+};
+
 export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
   // update the player mugshot and score in the store
   store.players = store.players.map(oldPlayer => ({
     ...oldPlayer,
-    mugshot,
+    mugshot: 'http://thecatapi.com/api/images/get?format=src&type=gif',
     score:
       answerIndex === store.currentQuestion.answerIndex &&
       oldPlayer.deviceId === user.deviceId ?
