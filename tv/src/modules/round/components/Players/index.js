@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { connect } from 'react-redux';
+import LinearGradient from 'react-native-linear-gradient';
 
 const colors = {
   white: 'white',
@@ -69,6 +70,9 @@ const styles = StyleSheet.create({
   textWrapper: {
     backgroundColor: colors.transparent,
   },
+  linearGradient: { position: 'absolute', top: 0, right: 0, bottom: 0, left: 0 },
+  scoreWrapper: { position: 'absolute', bottom: 0, left: 0, right: 0, padding: 10, overflow: 'hidden', backgroundColor: 'transparent' },
+  score: { color: 'white', fontSize: 24, textAlign: 'center' }
 });
 
 const Players = ({ players }) => (
@@ -89,8 +93,14 @@ const Players = ({ players }) => (
               <View style={styles.cardInner}>
                 <View style={styles.card}>
                   <View style={styles.imageWrapper}>
-                    {player.mugshot && <Image style={styles.image} source={{ uri: player.mugshot }} />}
-                    <Text>Score: { player.score }</Text>
+                    { player.mugshot && <Image style={styles.image} source={{ uri: player.mugshot }} /> }
+                    <LinearGradient
+                      colors={['rgba(0, 0, 0, 0)', 'rgba(0, 0, 0, 0.75)']}
+                      style={styles.linearGradient}
+                    />
+                    <View style={styles.scoreWrapper}>
+                      <Text style={styles.score}>Score: { player.score }</Text>
+                    </View>
                   </View>
                 </View>
                 <View style={styles.textWrapper}>
