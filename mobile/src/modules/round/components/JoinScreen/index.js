@@ -26,7 +26,7 @@ class JoinScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 20 }}>
-        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Let's play trivia!</Text>
+        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Let’s play trivia!</Text>
         <TextInput
           onChangeText={name => this.setState({ name })}
           value={this.state.name}
@@ -42,6 +42,8 @@ class JoinScreen extends React.Component {
           placeholder="What is your name?"
           placeholderTextColor={iOSColors.gray}
           underlineColorAndroid="transparent"
+          keyboardAppearance="dark"
+          selectionColor={iOSColors.orange}
         />
         <TouchableOpacity
           style={{ marginBottom: deviceWidth * 0.6 }}
