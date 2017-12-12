@@ -67,17 +67,19 @@ class QuestionScreen extends React.Component {
       <Screen>
         <View style={styles.upper}>
           <View style={styles.question}>
-            <TouchableHighlight
-              hasTVPreferredFocus
-              onPress={console.log}
-              underlayColor="transparent"
-              activeOpacity={1}
-              tvParallaxProperties={{
-                enabled: false,
-              }}
-            >
-              { question && <Text style={styles.questionText}>{ question.text }</Text> }
-            </TouchableHighlight>
+            {question &&
+              <TouchableHighlight
+                hasTVPreferredFocus
+                onPress={console.log}
+                underlayColor="transparent"
+                activeOpacity={1}
+                tvParallaxProperties={{
+                  enabled: false,
+                }}
+              >
+                <Text style={styles.questionText}>{question.text}</Text>
+              </TouchableHighlight>
+            }
           </View>
         </View>
         <Players />

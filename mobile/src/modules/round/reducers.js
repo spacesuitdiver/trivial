@@ -12,7 +12,7 @@ export default (state = initialState, { type, payload }) => {
         question: payload.question,
       };
     }
-    case types.ANSWER: {
+    case types.ANSWER_SUCCESS: {
       return {
         ...state,
         question: null,

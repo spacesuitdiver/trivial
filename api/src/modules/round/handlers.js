@@ -15,13 +15,13 @@ export const play = (event) => {
       ws,
     });
   } else {
-    // update existing user's if already playing
+    // update existing user if already playing
     store.players = store.players.map((player) => {
       if (player.deviceId === newPlayer.deviceId) {
         return {
           ...player,
           ...newPlayer,
-          score: player.score,  // keep score
+          score: player.score,  // keep existing score
           ws, // new connection
         };
       }
@@ -44,6 +44,65 @@ export const play = (event) => {
     }));
   });
 };
+
+export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
+  // update the player mugshot and score in the store
+  store.players = store.players.map((player) => {
+    if (player.deviceId === user.deviceId) {
+      return {
+        ...player,
+        ...user,
+        mugshot,
+        status: 'answered',
+        score: answerIndex === store.currentQuestion.answerIndex ?
+          player.score + 1 :
+          player.score,
+      };
+    }
+    return player;
+  })
+  .sort((a, b) => a.score - b.score);  // sort by score so clients don't have to
+
+  // send players to moderators
+  const payload = {
+    players: store.players.map(({ ws, ...rest }) => rest),
+  };
+
+  store.moderators.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
+
+    client.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'ANSWER',
+      payload,
+    }));
+  });
+};
+
+export const moderate = (event) => {
+  const { ws, user } = event;
+  const newModerator = { ws, user };
+
+  // add moderator to round if not already moderating
+  if (!store.players.some(({ deviceId }) => deviceId === newModerator.deviceId)) {
+    store.moderators.push(newModerator);
+  } else {
+    // update existing moderators's ws if already playing
+    store.moderators = store.moderators.map((moderator) => {
+      if (moderator.deviceId === newModerator.deviceId) {
+        return {
+          ...newModerator,
+          ws, // new connection
+        };
+      }
+      return moderator;
+    });
+  }
+
+  // progress the question
+  nextQuestion();
+};
+
 
 export const nextQuestion = () => {
   // fetch a new question, as if we needed this comment
@@ -91,58 +150,23 @@ export const nextQuestion = () => {
   });
 };
 
-export const moderate = (event) => {
-  const { ws, user } = event;
-  const newModerator = { ws, user };
+export const finish = () => {
+  const winningScore = store.players[0].score;
 
-  // add moderator to round if not already moderating
-  if (!store.players.some(({ deviceId }) => deviceId === newModerator.deviceId)) {
-    store.moderators.push(newModerator);
-  } else {
-    // update existing moderators's ws if already playing
-    store.moderators = store.moderators.map((moderator) => {
-      if (moderator.deviceId === newModerator.deviceId) {
-        return {
-          ...newModerator,
-          ws, // new connection
-        };
-      }
-      return moderator;
-    });
-  }
-
-  // progress the question
-  nextQuestion();
-};
-
-export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
-  // update the player mugshot and score in the store
-  store.players = store.players.map((player) => {
-    if (player.deviceId === user.deviceId) {
-      return {
-        ...player,
-        ...user,
-        mugshot,
-        status: 'answered',
-        score: answerIndex === store.currentQuestion.answerIndex ?
-          player.score + 1 :
-          player.score,
-      };
-    }
-    return player;
-  });
-
-  // send players to moderators
-  const payload = {
-    players: store.players.map(({ ws, ...rest }) => rest),
-  };
-
-  store.moderators.forEach((client) => {
+  store.players.forEach((client) => {
     if (client.ws.readyState !== 1) return; // guard against nonready clients
+    const { ws, user } = client;
+    const player = store.players.find(({ deviceId }) => deviceId === user.deviceId);
+    const isWinner = player.score === winningScore;
 
-    client.ws.send(JSON.stringify({
+    // send whether user is the winner
+    const payload = {
+      isWinner,
+    };
+
+    ws.send(JSON.stringify({
       resource: 'round',
-      action: 'ANSWER',
+      action: 'FINISH',
       payload,
     }));
   });
