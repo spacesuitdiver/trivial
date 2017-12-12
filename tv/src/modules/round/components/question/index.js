@@ -8,39 +8,71 @@ import { connect } from 'react-redux';
 
 import Screen from '../Screen';
 import Players from '../Players';
-import Button from '../Button';
 
 import { send } from '../../../../websocket';
 
-const nextQuestion = () => send({
-  resource: 'round',
-  action: 'nextQuestion',
-});
+const TVEventHandler = require('TVEventHandler'); // eslint-disable-line
 
-const QuestionScreen = ({ question, navigation }) => (
-  <Screen>
-    <View style={styles.upper}>
-      <View style={styles.question}>
-        { question && <Text style={styles.questionText}>{ question.text }</Text> }
-      </View>
-      <View style={styles.buttonRow}>
-        <Button
-          style={{ marginRight: 20 }}
-          onPress={nextQuestion}
-        >
-          <Text style={styles.text}>NEXT</Text>
-        </Button>
-        <Button
-          style={{ marginRight: 20 }}
-          onPress={() => navigation.navigate('Winner')}
-        >
-          <Text style={styles.text}>FINISH</Text>
-        </Button>
-      </View>
-    </View>
-    <Players />
-  </Screen>
-);
+class QuestionScreen extends React.Component {
+
+  componentDidMount() {
+    this._enableTVEventHandler();
+  }
+
+  componentDidUpdate() {
+    const { websocketStatus, navigation } = this.props;
+
+    if (websocketStatus === 'disconnected' || websocketStatus === 'error') {
+      navigation.goBack();
+    }
+  }
+
+  componentWillUnmount() {
+    this._disableTVEventHandler();
+  }
+
+  _enableTVEventHandler() {
+    this._tvEventHandler = new TVEventHandler();
+    this._tvEventHandler.enable(this, (cmp, evt) => {
+      if (evt.eventType === 'left') {
+        this.nextQuestion();
+      }
+      if (evt.eventType === 'longSelect') {
+        this.props.navigation.navigate('Winner');
+        this._disableTVEventHandler();
+      }
+    });
+  }
+
+  _disableTVEventHandler() {
+    if (this._tvEventHandler) {
+      this._tvEventHandler.disable();
+      delete this._tvEventHandler;
+    }
+  }
+
+  nextQuestion = () => send({
+    resource: 'round',
+    action: 'nextQuestion',
+  });
+
+  render() {
+    const {
+      props: { question },
+    } = this;
+
+    return (
+      <Screen>
+        <View style={styles.upper}>
+          <View style={styles.question}>
+            { question && <Text style={styles.questionText}>{ question.text }</Text> }
+          </View>
+        </View>
+        <Players />
+      </Screen>
+    );
+  }
+}
 
 const colors = {
   opaque: 'rgba(255,255,255,0.25)',
@@ -78,6 +110,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   question: state.round.default.question,
+  websocketStatus: state.websocket.connection.status,
 });
 
 export default connect(mapStateToProps)(QuestionScreen);

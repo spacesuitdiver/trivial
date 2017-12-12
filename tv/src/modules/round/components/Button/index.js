@@ -15,11 +15,11 @@ const styles = StyleSheet.create({
   linearGradient: { backgroundColor: colors.transparent, padding: 30 },
 });
 
-const Button = ({ onPress, children, style }) => (
+const Button = ({ children, style, ...rest }) => (
   <View style={style}>
     <TouchableHighlight
-      onPress={onPress}
       style={styles.touchableHighlight}
+      {...rest}
     >
       <LinearGradient
         colors={['#222222', '#2b2b2b', '#2f2f2f']}
