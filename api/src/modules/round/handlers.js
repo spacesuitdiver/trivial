@@ -79,13 +79,15 @@ export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
   });
 };
 
-export const moderate = (event) => {
-  const { ws, user } = event;
-  const newModerator = { ws, user };
+export const moderate = ({ ws, payload: { user } }) => {
+  const newModerator = { ws, ...user };
 
   // add moderator to round if not already moderating
   if (!store.players.some(({ deviceId }) => deviceId === newModerator.deviceId)) {
-    store.moderators.push(newModerator);
+    store.moderators.push({
+      ...user,
+      ws,
+    });
   } else {
     // update existing moderators's ws if already playing
     store.moderators = store.moderators.map((moderator) => {
