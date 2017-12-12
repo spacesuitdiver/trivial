@@ -12,35 +12,52 @@ import Button from '../Button';
 
 import { send } from '../../../../websocket';
 
-const nextQuestion = () => send({
-  resource: 'round',
-  action: 'nextQuestion',
-});
+class QuestionScreen extends React.Component {
 
-const QuestionScreen = ({ question, navigation }) => (
-  <Screen>
-    <View style={styles.upper}>
-      <View style={styles.question}>
-        { question && <Text style={styles.questionText}>{ question.text }</Text> }
-      </View>
-      <View style={styles.buttonRow}>
-        <Button
-          style={{ marginRight: 20 }}
-          onPress={nextQuestion}
-        >
-          <Text style={styles.text}>NEXT</Text>
-        </Button>
-        <Button
-          style={{ marginRight: 20 }}
-          onPress={() => navigation.navigate('Winner')}
-        >
-          <Text style={styles.text}>FINISH</Text>
-        </Button>
-      </View>
-    </View>
-    <Players />
-  </Screen>
-);
+  componentDidUpdate() {
+    const { websocketStatus, navigation } = this.props;
+
+    if (websocketStatus === 'disconnected' || websocketStatus === 'error') {
+      navigation.goBack();
+    }
+  }
+
+  nextQuestion = () => send({
+    resource: 'round',
+    action: 'nextQuestion',
+  });
+
+  render() {
+    const {
+      props: { question, navigation },
+    } = this;
+
+    return (
+      <Screen>
+        <View style={styles.upper}>
+          <View style={styles.question}>
+            { question && <Text style={styles.questionText}>{ question.text }</Text> }
+          </View>
+          <View style={styles.buttonRow}>
+            <Button
+              style={{ marginRight: 20 }}
+              onPress={this.nextQuestion}
+            >
+              <Text style={styles.text}>NEXT</Text>
+            </Button>
+            <Button
+              style={{ marginRight: 20 }}
+              onPress={() => navigation.navigate('Winner')}
+            >
+              <Text style={styles.text}>FINISH</Text>
+            </Button>
+          </View>
+        </View>
+        <Players />
+      </Screen>
+    );
+  }
+}
 
 const colors = {
   opaque: 'rgba(255,255,255,0.25)',
@@ -78,6 +95,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   question: state.round.default.question,
+  websocketStatus: state.websocket.connection.status,
 });
 
 export default connect(mapStateToProps)(QuestionScreen);

@@ -30,18 +30,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const Winner = ({ winner }) => (
-  <Screen>
-    <View style={styles.view}><Text style={styles.title}>Winner!</Text></View>
-    <View>
-      <Image style={styles.image} source={{ uri: winner.mugshot }} />
-    </View>
-    <View style={styles.view}><Text style={styles.winnerText}>{ winner.name }</Text></View>
-  </Screen>
-);
+const Winner = class extends React.Component {
+
+  componentDidUpdate() {
+    const { websocketStatus, navigation } = this.props;
+
+    if (websocketStatus === 'disconnected' || websocketStatus === 'error') {
+      navigation.goBack();
+    }
+  }
+
+  render() {
+    const {
+      props: { winner },
+    } = this;
+
+    return (
+      <Screen>
+        <View style={styles.view}><Text style={styles.title}>Winner!</Text></View>
+        <View>
+          { winner && winner.mugshot && <Image style={styles.image} source={{ uri: winner.mugshot }} /> }
+        </View>
+        { winner && winner.name && <View style={styles.view}><Text style={styles.winnerText}>{ winner.name }</Text></View> }
+      </Screen>
+    );
+  }
+};
 
 const mapStateToProps = state => ({
   winner: state.round.default.players[0],
+  websocketStatus: state.websocket.connection.status,
 });
 
 export default connect(mapStateToProps)(Winner);
