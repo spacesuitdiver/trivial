@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {
-  StatusBar,
   View,
 } from 'react-native';
 import { ScreenOrientation } from 'expo';
@@ -12,7 +11,6 @@ import { AppNavigator } from './modules/app';
 
 export default class extends Component {
   componentDidMount() {
-    StatusBar.setBarStyle('light-content');
     WebSocket.init();
     ScreenOrientation.allow(ScreenOrientation.Orientation.PORTRAIT_UP);
   }
