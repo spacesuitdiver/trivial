@@ -4,8 +4,11 @@ import {
     Text,
     StyleSheet,
     Image,
+    Dimensions,
 } from 'react-native';
 import { connect } from 'react-redux';
+
+import EmojiParticles from '../EmojiParticles';
 
 import Screen from '../Screen';
 
@@ -52,6 +55,7 @@ const Winner = class extends React.Component {
           { winner && winner.mugshot && <Image style={styles.image} source={{ uri: winner.mugshot }} /> }
         </View>
         { winner && winner.name && <View style={styles.view}><Text style={styles.winnerText}>{ winner.name }</Text></View> }
+        <EmojiParticles speed={3000} particleMaxDistance={Dimensions.get('window').height} />
       </Screen>
     );
   }

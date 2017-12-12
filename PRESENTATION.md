@@ -16,6 +16,7 @@
 - Flow through mugshot camera upload / endpoint
 
 ## Part 2 (Dustin)
+- Talk about react-native init. If you've built react-native for mobile, you've built for TV.
 - Talk about tvOS specific UI items (https://facebook.github.io/react-native/docs/building-for-apple-tv.html)
   - hasTVPreferredFocus
   - Touchable*
