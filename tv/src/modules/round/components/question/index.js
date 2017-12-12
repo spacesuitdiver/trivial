@@ -3,6 +3,7 @@ import {
     View,
     Text,
     StyleSheet,
+    TouchableHighlight,
 } from 'react-native';
 import { connect } from 'react-redux';
 
@@ -34,6 +35,7 @@ class QuestionScreen extends React.Component {
   _enableTVEventHandler() {
     this._tvEventHandler = new TVEventHandler();
     this._tvEventHandler.enable(this, (cmp, evt) => {
+      console.log(evt);
       if (evt.eventType === 'left') {
         this.nextQuestion();
       }
@@ -65,7 +67,17 @@ class QuestionScreen extends React.Component {
       <Screen>
         <View style={styles.upper}>
           <View style={styles.question}>
-            { question && <Text style={styles.questionText}>{ question.text }</Text> }
+            <TouchableHighlight
+              hasTVPreferredFocus
+              onPress={console.log}
+              underlayColor="transparent"
+              activeOpacity={1}
+              tvParallaxProperties={{
+                enabled: false,
+              }}
+            >
+              { question && <Text style={styles.questionText}>{ question.text }</Text> }
+            </TouchableHighlight>
           </View>
         </View>
         <Players />
