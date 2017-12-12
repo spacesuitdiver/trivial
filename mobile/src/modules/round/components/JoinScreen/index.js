@@ -42,6 +42,8 @@ class JoinScreen extends React.Component {
           placeholder="What is your name?"
           placeholderTextColor={iOSColors.gray}
           underlineColorAndroid="transparent"
+          keyboardAppearance="dark"
+          selectionColor={iOSColors.orange}
         />
         <TouchableOpacity
           style={{ marginBottom: deviceWidth * 0.6 }}
