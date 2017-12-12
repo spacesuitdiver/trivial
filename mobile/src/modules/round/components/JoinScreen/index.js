@@ -26,7 +26,7 @@ class JoinScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: iOSColors.black, justifyContent: 'center', padding: 20 }}>
-        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Let's play trivia!</Text>
+        <Text style={iOSUIKit.largeTitleEmphasizedWhite}>Let’s play trivia!</Text>
         <TextInput
           onChangeText={name => this.setState({ name })}
           value={this.state.name}
