@@ -1,12 +1,16 @@
 import os from 'os';
 import express from 'express';
 import expressWs from 'express-ws';
+import multer from 'multer';
 
 import logger from './logger';
 import { middlewares } from './express';
 
 import store from './store';
 import { handlers } from './modules';
+
+const hostname = os.hostname();
+const port = process.env.PORT || 8080;
 
 const wss = expressWs(express());
 const { app } = wss;
@@ -15,7 +19,7 @@ app.set('trust proxy', 1);
 
 app.use(middlewares);
 
-app.use('/static', express.static('public'));
+app.use('/public', express.static('public'));
 
 app.ws('/', (ws, req) => {
   ws.on('close', () => logger.info('Connection closed.'));
@@ -44,6 +48,12 @@ app.get('/store', (req, res) => {
   });
 });
 
-const port = process.env.PORT || 8080;
+const upload = multer({ dest: 'public/uploads/' });
+app.post('/mugshot', upload.single('mugshot'), (req, res) => {
+  const url = `http://${hostname}:${port}/${req.file.path}`; // should probably copy this but life's short
+
+  res.send({ url });
+});
+
 app.listen(port);
-logger.info(`Listening on http://${os.hostname()}:${port}.`);
+logger.info(`Listening on http://${hostname}:${port}.`);
