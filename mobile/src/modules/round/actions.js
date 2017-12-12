@@ -18,7 +18,7 @@ export const play = name => () => {
 export const answer = ({ answerIndex, uri }) => (dispatch) => {
   const { deviceId } = Constants;
 
-  dispatch({ type: types.ANSWERING, payload: { answerIndex, uri } });
+  dispatch({ type: types.ANSWER, payload: { answerIndex, uri } });
 
   const formData = new FormData();
   formData.append('mugshot', {
@@ -39,7 +39,7 @@ export const answer = ({ answerIndex, uri }) => (dispatch) => {
   fetch('http://leblancc-mbp:8080/mugshot', options)
   .then(res => res.json())
   .then(({ url }) => {
-    dispatch({ type: types.ANSWERING_SUCCESS });
+    dispatch({ type: types.ANSWER_SUCCESS });
     send({
       resource: 'round',
       action: 'answer',
@@ -52,5 +52,5 @@ export const answer = ({ answerIndex, uri }) => (dispatch) => {
       },
     });
   })
-  .catch(() => dispatch({ type: types.ANSWERING_FAILED }));
+  .catch(() => dispatch({ type: types.ANSWER_FAILED }));
 };
