@@ -8,6 +8,7 @@ import { store } from './redux';
 import * as WebSocket from './websocket';
 
 import { AppNavigator } from './modules/app';
+import { WebSocketStatusBar } from './modules/round';
 
 const TVEventHandler = require('TVEventHandler'); // eslint-disable-line
 
@@ -38,7 +39,10 @@ class App extends Component {
     return (
       <View style={styles.container}>
         <Provider store={store}>
-          <AppNavigator />
+          <View style={{ flex: 1 }}>
+            <AppNavigator />
+            <WebSocketStatusBar />
+          </View>
         </Provider>
       </View>
     );
