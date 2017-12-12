@@ -59,6 +59,7 @@ class Welcome extends React.Component {
         </View>
         <Button
           onPress={this.begin}
+          hasTVPreferredFocus
         >
           <Text style={styles.text}>Let&rsquo;s Play!</Text>
         </Button>

@@ -8,17 +8,46 @@ import { connect } from 'react-redux';
 
 import Screen from '../Screen';
 import Players from '../Players';
-import Button from '../Button';
 
 import { send } from '../../../../websocket';
 
+const TVEventHandler = require('TVEventHandler'); // eslint-disable-line
+
 class QuestionScreen extends React.Component {
+
+  componentDidMount() {
+    this._enableTVEventHandler();
+  }
 
   componentDidUpdate() {
     const { websocketStatus, navigation } = this.props;
 
     if (websocketStatus === 'disconnected' || websocketStatus === 'error') {
       navigation.goBack();
+    }
+  }
+
+  componentWillUnmount() {
+    this._disableTVEventHandler();
+  }
+
+  _enableTVEventHandler() {
+    this._tvEventHandler = new TVEventHandler();
+    this._tvEventHandler.enable(this, (cmp, evt) => {
+      if (evt.eventType === 'left') {
+        this.nextQuestion();
+      }
+      if (evt.eventType === 'longSelect') {
+        this.props.navigation.navigate('Winner');
+        this._disableTVEventHandler();
+      }
+    });
+  }
+
+  _disableTVEventHandler() {
+    if (this._tvEventHandler) {
+      this._tvEventHandler.disable();
+      delete this._tvEventHandler;
     }
   }
 
@@ -29,7 +58,7 @@ class QuestionScreen extends React.Component {
 
   render() {
     const {
-      props: { question, navigation },
+      props: { question },
     } = this;
 
     return (
@@ -37,20 +66,6 @@ class QuestionScreen extends React.Component {
         <View style={styles.upper}>
           <View style={styles.question}>
             { question && <Text style={styles.questionText}>{ question.text }</Text> }
-          </View>
-          <View style={styles.buttonRow}>
-            <Button
-              style={{ marginRight: 20 }}
-              onPress={this.nextQuestion}
-            >
-              <Text style={styles.text}>NEXT</Text>
-            </Button>
-            <Button
-              style={{ marginRight: 20 }}
-              onPress={() => navigation.navigate('Winner')}
-            >
-              <Text style={styles.text}>FINISH</Text>
-            </Button>
           </View>
         </View>
         <Players />
