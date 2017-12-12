@@ -17,6 +17,8 @@
 
 ## Part 2 (Dustin)
 - Talk about tvOS specific UI items (https://facebook.github.io/react-native/docs/building-for-apple-tv.html)
+  - hasTVPreferredFocus
+  - Touchable*
 - Mention Remote event handler
 - Mention same app structure modular "ducks" structure for app (https://github.com/erikras/ducks-modular-redux)
 - Flow through a websocket connection

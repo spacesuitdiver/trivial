@@ -15,13 +15,13 @@ export const play = (event) => {
       ws,
     });
   } else {
-    // update existing user's if already playing
+    // update existing user if already playing
     store.players = store.players.map((player) => {
       if (player.deviceId === newPlayer.deviceId) {
         return {
           ...player,
           ...newPlayer,
-          score: player.score,  // keep score
+          score: player.score,  // keep existing score
           ws, // new connection
         };
       }
@@ -60,7 +60,8 @@ export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
       };
     }
     return player;
-  });
+  })
+  .sort((a, b) => a.score - b.score);  // sort by score so clients don't have to
 
   // send players to moderators
   const payload = {
@@ -146,5 +147,27 @@ export const nextQuestion = () => {
         payload: payloadForModerators,
       }));
     });
+  });
+};
+
+export const finish = () => {
+  const winningScore = store.players[0].score;
+
+  store.players.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
+    const { ws, user } = client;
+    const player = store.players.find(({ deviceId }) => deviceId === user.deviceId);
+    const isWinner = player.score === winningScore;
+
+    // send whether user is the winner
+    const payload = {
+      isWinner,
+    };
+
+    ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'FINISH',
+      payload,
+    }));
   });
 };
