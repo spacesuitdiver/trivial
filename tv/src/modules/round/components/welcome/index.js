@@ -42,9 +42,11 @@ class Welcome extends React.Component {
     send({
       resource: 'round',
       action: 'moderate',
-      user: {
-        name: 'Apple Tv',
-        deviceId: '1',
+      payload: {
+        user: {
+          name: 'Apple Tv',
+          deviceId: '1',
+        },
       },
     });
     this.props.navigation.navigate('Question');

@@ -41,6 +41,7 @@ class QuestionScreen extends React.Component {
       }
       if (evt.eventType === 'longSelect') {
         this.props.navigation.navigate('Winner');
+        this.finish();
         this._disableTVEventHandler();
       }
     });
@@ -56,6 +57,11 @@ class QuestionScreen extends React.Component {
   nextQuestion = () => send({
     resource: 'round',
     action: 'nextQuestion',
+  });
+
+  finish = () => send({
+    resource: 'round',
+    action: 'finish',
   });
 
   render() {
