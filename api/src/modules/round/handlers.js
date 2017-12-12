@@ -138,6 +138,8 @@ export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
   };
 
   store.moderators.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
+
     client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'ANSWER',

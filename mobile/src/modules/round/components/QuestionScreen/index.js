@@ -31,11 +31,9 @@ class QuestionScreen extends React.Component {
     const { actions } = this.props;
 
     this.camera.takePictureAsync({ base64: true, quality: 0 })
-    .then(({ base64 }) => {
-      const mugshot = `data:image/jpg;base64,${base64}`;
-
-      actions.question.answer({ answerIndex, mugshot: 'http://thecatapi.com/api/images/get?format=src&type=gif' });
-      this.setState({ mugshot });
+    .then(({ uri }) => {
+      actions.question.answer({ answerIndex, uri });
+      this.setState({ mugshot: uri });
       setTimeout(() => { this.setState({ mugshot: null }); }, 5000);
     });
   };

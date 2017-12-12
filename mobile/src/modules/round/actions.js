@@ -15,20 +15,42 @@ export const play = name => () => {
   });
 };
 
-export const answer = ({ answerIndex, mugshot }) => (dispatch) => {
+export const answer = ({ answerIndex, uri }) => (dispatch) => {
   const { deviceId } = Constants;
 
-  dispatch({ type: types.ANSWER });
+  dispatch({ type: types.ANSWERING, payload: { answerIndex, uri } });
 
-  send({
-    resource: 'round',
-    action: 'answer',
-    payload: {
-      user: {
-        deviceId,
-      },
-      mugshot,
-      answerIndex,
-    },
+  const formData = new FormData();
+  formData.append('mugshot', {
+    uri,
+    name: 'photo.jpeg',
+    type: 'image/jpeg',
   });
+
+  const options = {
+    method: 'POST',
+    body: formData,
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'multipart/form-data',
+    },
+  };
+
+  fetch('http://leblancc-mbp:8080/mugshot', options)
+  .then(res => res.json())
+  .then(({ url }) => {
+    dispatch({ type: types.ANSWERING_SUCCESS });
+    send({
+      resource: 'round',
+      action: 'answer',
+      payload: {
+        user: {
+          deviceId,
+        },
+        mugshot: url,
+        answerIndex,
+      },
+    });
+  })
+  .catch(() => dispatch({ type: types.ANSWERING_FAILED }));
 };
