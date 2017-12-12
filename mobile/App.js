@@ -14,7 +14,7 @@ class ExpoApp extends React.Component {
   };
 
   componentDidMount() {
-    StatusBar.setHidden(true);
+    StatusBar.setHidden(true, 'fade');
     StatusBar.setBarStyle('light-content');
 
     setTimeout(() => {
