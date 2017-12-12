@@ -45,6 +45,64 @@ export const play = (event) => {
   });
 };
 
+export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
+  // update the player mugshot and score in the store
+  store.players = store.players.map((player) => {
+    if (player.deviceId === user.deviceId) {
+      return {
+        ...player,
+        ...user,
+        mugshot,
+        status: 'answered',
+        score: answerIndex === store.currentQuestion.answerIndex ?
+          player.score + 1 :
+          player.score,
+      };
+    }
+    return player;
+  });
+
+  // send players to moderators
+  const payload = {
+    players: store.players.map(({ ws, ...rest }) => rest),
+  };
+
+  store.moderators.forEach((client) => {
+    if (client.ws.readyState !== 1) return; // guard against nonready clients
+
+    client.ws.send(JSON.stringify({
+      resource: 'round',
+      action: 'ANSWER',
+      payload,
+    }));
+  });
+};
+
+export const moderate = (event) => {
+  const { ws, user } = event;
+  const newModerator = { ws, user };
+
+  // add moderator to round if not already moderating
+  if (!store.players.some(({ deviceId }) => deviceId === newModerator.deviceId)) {
+    store.moderators.push(newModerator);
+  } else {
+    // update existing moderators's ws if already playing
+    store.moderators = store.moderators.map((moderator) => {
+      if (moderator.deviceId === newModerator.deviceId) {
+        return {
+          ...newModerator,
+          ws, // new connection
+        };
+      }
+      return moderator;
+    });
+  }
+
+  // progress the question
+  nextQuestion();
+};
+
+
 export const nextQuestion = () => {
   // fetch a new question, as if we needed this comment
   TriviaApi.fetchQuestion()
@@ -88,62 +146,5 @@ export const nextQuestion = () => {
         payload: payloadForModerators,
       }));
     });
-  });
-};
-
-export const moderate = (event) => {
-  const { ws, user } = event;
-  const newModerator = { ws, user };
-
-  // add moderator to round if not already moderating
-  if (!store.players.some(({ deviceId }) => deviceId === newModerator.deviceId)) {
-    store.moderators.push(newModerator);
-  } else {
-    // update existing moderators's ws if already playing
-    store.moderators = store.moderators.map((moderator) => {
-      if (moderator.deviceId === newModerator.deviceId) {
-        return {
-          ...newModerator,
-          ws, // new connection
-        };
-      }
-      return moderator;
-    });
-  }
-
-  // progress the question
-  nextQuestion();
-};
-
-export const answer = ({ payload: { user, answerIndex, mugshot } }) => {
-  // update the player mugshot and score in the store
-  store.players = store.players.map((player) => {
-    if (player.deviceId === user.deviceId) {
-      return {
-        ...player,
-        ...user,
-        mugshot,
-        status: 'answered',
-        score: answerIndex === store.currentQuestion.answerIndex ?
-          player.score + 1 :
-          player.score,
-      };
-    }
-    return player;
-  });
-
-  // send players to moderators
-  const payload = {
-    players: store.players.map(({ ws, ...rest }) => rest),
-  };
-
-  store.moderators.forEach((client) => {
-    if (client.ws.readyState !== 1) return; // guard against nonready clients
-
-    client.ws.send(JSON.stringify({
-      resource: 'round',
-      action: 'ANSWER',
-      payload,
-    }));
   });
 };
