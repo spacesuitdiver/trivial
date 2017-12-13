@@ -1,9 +1,11 @@
 import ReconnectingWebSocket from 'reconnecting-websocket';
 import { onMessage, onClose, onError, onOpen } from './handlers';
 
-const connection = new ReconnectingWebSocket('ws://leblancc-mbp:8080');
+let connection;
 
 export const init = () => {
+  connection = new ReconnectingWebSocket('ws://leblancc-mbp:8080');
+
   connection.onmessage = onMessage;
   connection.onclose = onClose;
   connection.onerror = onError;
