@@ -1,5 +1,5 @@
 import React from 'react';
-import { Animated, View, Dimensions, StatusBar } from 'react-native';
+import { Animated, View, Dimensions, StatusBar, StyleSheet, Image } from 'react-native';
 import { AppLoading } from 'expo';
 
 import App from './src/App';
@@ -18,7 +18,9 @@ class ExpoApp extends React.Component {
     StatusBar.setBarStyle('light-content');
 
     setTimeout(() => {
-      this.setState({ loading: false }, () => {
+      this.setState({
+        loading: false,
+      }, () => {
         StatusBar.setHidden(false, 'fade');
         Animated.spring(
           this.fadeAnimatedValue,
@@ -34,25 +36,34 @@ class ExpoApp extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         {this.state.loading ? <AppLoading /> : <App />}
-        <Animated.Image
-          source={splashImage}
-          style={{
-            top: 0,
-            position: 'absolute',
-            height: deviceHeight,
-            width: deviceWidth,
-            resizeMode: 'cover',
-            opacity: this.fadeAnimatedValue,
-            transform: [
-              {
-                scale: this.fadeAnimatedValue.interpolate({
-                  inputRange: [0, 1],
-                  outputRange: [3, 1],
-                }),
-              },
-            ],
-          }}
-        />
+        <Animated.View
+          pointerEvents="none"
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              background: 'transparent',
+              opacity: this.fadeAnimatedValue,
+              transform: [
+                {
+                  scale: this.fadeAnimatedValue.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [3, 1],
+                  }),
+                },
+              ],
+            },
+          ]}
+        >
+          <Image
+            fadeDuration={0}
+            source={splashImage}
+            style={{
+              height: deviceHeight,
+              width: deviceWidth,
+              resizeMode: 'cover',
+            }}
+          />
+        </Animated.View>
       </View>
     );
   }
