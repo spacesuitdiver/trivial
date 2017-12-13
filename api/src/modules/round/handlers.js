@@ -157,8 +157,7 @@ export const finish = () => {
 
   store.players.forEach((client) => {
     if (client.ws.readyState !== 1) return; // guard against nonready clients
-    const { ws, user } = client;
-    const player = store.players.find(({ deviceId }) => deviceId === user.deviceId);
+    const player = store.players.find(({ deviceId }) => deviceId === client.deviceId);
     const isWinner = player.score === winningScore;
 
     // send whether user is the winner
@@ -166,7 +165,7 @@ export const finish = () => {
       isWinner,
     };
 
-    ws.send(JSON.stringify({
+    client.ws.send(JSON.stringify({
       resource: 'round',
       action: 'FINISH',
       payload,

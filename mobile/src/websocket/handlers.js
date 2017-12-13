@@ -18,9 +18,10 @@ export const onClose = () => {
   });
 };
 
-export const onError = () => {
+export const onError = (error) => {
   store.dispatch({
     type: 'websocket/ERROR',
+    payload: { error },
   });
 };
 
